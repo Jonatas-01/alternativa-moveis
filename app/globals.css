@@ -69,50 +69,14 @@ main-color {
 }
 
 .gold-gradient {
-    background: #b48811;
-    background: -moz-linear-gradient(
-        top,
-        #ebd197 0%,
-        #b48811 50%,
-        #a2790d 51%,
-        #bb9b49 100%
-    );
-    background: -webkit-gradient(
-        linear,
-        left top,
-        left bottom,
-        color-stop(0%, #ebd197),
-        color-stop(50%, #b48811),
-        color-stop(51%, #a2790d),
-        color-stop(100%, #bb9b49)
-    );
-    background: -webkit-linear-gradient(
-        top,
-        #ebd197 0%,
-        #b48811 50%,
-        #a2790d 51%,
-        #bb9b49 100%
-    );
-    background: -o-linear-gradient(
-        top,
-        #ebd197 0%,
-        #b48811 50%,
-        #a2790d 51%,
-        #bb9b49 100%
-    );
-    background: -ms-linear-gradient(
-        top,
-        #ebd197 0%,
-        #b48811 50%,
-        #a2790d 51%,
-        #bb9b49 100%
-    );
     background: linear-gradient(
         to bottom,
-        #ebd197 0%,
+        #ebc980 0%,
         #b48811 50%,
         #a2790d 51%,
         #bb9b49 100%
     );
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ebd197', endColorstr='#b48811',GradientType=0 );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
