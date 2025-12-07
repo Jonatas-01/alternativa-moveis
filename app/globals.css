@@ -35,6 +35,14 @@ main-color {
   color: var(--primary);
 }
 
+.primary-title {
+  @apply text-4xl font-bold
+}
+
+.secondary-title {
+  @apply text-2xl font-bold
+}
+
 .botoes {
   background-color: var(--primary);
   color: var(--placeholder);
@@ -51,4 +59,4 @@ main-color {
   border-radius: 0.4rem;
 }
 
-/* Hero */
+/* Serviços */
