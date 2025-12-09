@@ -68,7 +68,7 @@ main-color {
     border-radius: 20px;
 }
 
-.gold-gradient {
+.gold-gradient-text {
     background: linear-gradient(
         to bottom,
         #ebc980 0%,
@@ -80,3 +80,4 @@ main-color {
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
+

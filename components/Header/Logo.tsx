@@ -11,7 +11,7 @@ export default function Logo() {
                     width={45}
                     height={45}
                 />
-                <h1 className="ml-2 text-md md:text-xl">Alternativa <span className="gold-gradient">Móveis</span></h1>
+                <h1 className="ml-2 text-md md:text-xl">Alternativa <span className="gold-gradient-text">Móveis</span></h1>
             </div>
         </Link>
     )

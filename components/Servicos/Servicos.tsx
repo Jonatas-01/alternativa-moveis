@@ -5,11 +5,11 @@ import { TbTruckDelivery } from "react-icons/tb";
 
 export default function Servicos() {
     return (
-        <div className="mt-8">
+        <div className="mt-10">
             <div className="mb-4">
                 <h1 className="secondary-title">Nossos Serviços</h1>
             </div>
-            <div className="flex justify-center flex-wrap gap-10 [&>*]:max-w-[340px]">
+            <div className="flex justify-center flex-wrap gap-10 [&>*]:max-w-[340px] [&>*]:hover:scale-105 [&>*]:transition-transform [&>*]:duration-400">
                 <div className="text-center flex flex-col items-center servico-card">
                     <PiOfficeChairFill className="justify-center mb-2" size={70} color="var(--secondary)" />
                     <div>
