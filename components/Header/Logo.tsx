@@ -6,7 +6,7 @@ export default function Logo() {
         <Link href="/">
             <div className="flex items-center cursor-pointer w-[100px] md:w-[auto]">
                 <Image
-                    src="/logo.png"
+                    src="/image/logo.png"
                     alt="Alternativa Móveis Logo"
                     width={45}
                     height={45}

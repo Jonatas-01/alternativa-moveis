@@ -1,4 +1,5 @@
 
+import { BsArrowRight } from "react-icons/bs";
 import EmblaCarousel from "../ui/EmblaCarousel"
 import { EmblaOptionsType } from 'embla-carousel'
 
@@ -14,6 +15,9 @@ export default function Destaque() {
             </div>
             <div className="mt-7">
                 <EmblaCarousel slides={SLIDES} options={OPTIONS} />
+            </div>
+            <div className="flex justify-center mt-3">
+                <a href="#" className="flex items-center botoes gap-3">Ver Catálogo <BsArrowRight /></a>
             </div>
         </div>
     )
