@@ -2,6 +2,7 @@ import Hero from '@/components/Hero/Hero';
 import Servicos from '@/components/Servicos/Servicos';
 import Destaque from '@/components/Destaque/Destaque';
 import SobreNos from '@/components/SobreNos/SobreNos';
+import Chamada from '@/components/Chamada/Chamada';
 
 export default function Home() {
   return (
@@ -13,6 +14,11 @@ export default function Home() {
       <Destaque />
       <div className="container mx-auto px-6">
         <SobreNos />
+      </div>
+      <div className="bg-[#ebebeb]">
+        <div className='container mx-auto px-6 '>
+          <Chamada />
+        </div>
       </div>
     </main>
   );
