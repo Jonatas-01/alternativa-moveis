@@ -9,11 +9,11 @@ export default function Home() {
   return (
     <main>
       <Hero />
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-6" id="servicos">
         <Servicos />
       </div>
       <Destaque />
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-6" id="sobre-nos">
         <SobreNos />
       </div>
       <div className="bg-[#ebebeb]">

@@ -1,3 +1,7 @@
+import { FaInstagram, FaWhatsapp, FaHome } from "react-icons/fa";
+import { FaPhoneAlt } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
+import Link from 'next/link';
 
 export default function Footer() {
     return (
@@ -9,21 +13,21 @@ export default function Footer() {
                 </div>
                 <div className="space-y-1">
                     <h3>Link Rápidos</h3>
-                    <p><a href="">Início</a></p>
-                    <p><a href="">Catálogo</a></p>
-                    <p><a href="">Serviços</a></p>
-                    <p><a href="">Sobre Nós</a></p>
+                    <p><Link href="/">Início</Link></p>
+                    <p><Link href="/catalogo">Catálogo</Link></p>
+                    <p><Link href="#servicos">Serviços</Link></p>
+                    <p><Link href="/sobre-nos">Sobre Nós</Link></p>
                 </div>
                 <div className="space-y-1">
                     <h3>Contato</h3>
-                    <p>Rua Exemplo, 123, Goiania - GO</p>
-                    <p>Telefone: (XX) XXXX-XXXX</p>
-                    <p>Email: contato@alternativamoveis.com</p>
+                    <p className="flex items-center gap-2"><FaHome className="lg:hidden"/> Av Alberto Miguel,859 St Campinas, Goiania - GO</p>
+                    <p className="flex items-center gap-2"><FaPhoneAlt className="lg:hidden"/> (62) 3215-0996</p>
+                    <p className="flex items-center gap-2"> <MdEmail className="lg:hidden"/> leonardo.alternativamoveis@gmail.com</p>
                 </div>
                 <div className="space-y-1">
                     <h3>Siga-nos</h3>
-                    <p><a href="">Facebook</a></p>
-                    <p><a href="">Instagram</a></p>
+                    <p><a href="https://api.whatsapp.com/send?phone=556232150996&text=Ol%C3%A1%2C%20Estava%20olhando%20seu%20cat%C3%A1logo%20e%20me%20interessei%20por%20um%20produto%20.%20" className="flex items-center gap-2"><FaWhatsapp /> Whatsapp</a></p>
+                    <p><a href="https://www.instagram.com/alternativamoveisgyn?igsh=MXB2OGd0NGd3djB3YQ==" className="flex items-center gap-2"> <FaInstagram /> Instagram</a></p>
                 </div>
             </div>
 
