@@ -3,6 +3,7 @@ import Servicos from '@/components/Servicos/Servicos';
 import Destaque from '@/components/Destaque/Destaque';
 import SobreNos from '@/components/SobreNos/SobreNos';
 import Chamada from '@/components/Chamada/Chamada';
+import Footer from '@/components/Footer/Footer';
 
 export default function Home() {
   return (
@@ -16,8 +17,13 @@ export default function Home() {
         <SobreNos />
       </div>
       <div className="bg-[#ebebeb]">
-        <div className='container mx-auto px-6 '>
+        <div className='container mx-auto px-6'>
           <Chamada />
+        </div>
+      </div>
+      <div className="bg-[var(--primary)] text-white">
+        <div className="container mx-auto px-6">
+          <Footer />
         </div>
       </div>
     </main>
