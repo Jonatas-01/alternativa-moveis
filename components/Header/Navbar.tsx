@@ -41,7 +41,7 @@ export default function Navbar() {
                         onClick={toggleMenu}
                         className="p-2 rounded-md hover:bg-[var(--secondary)] transition-colors duration-200"
                     >
-                        {isOpen ? <MdOutlineClose className="main-color" /> : <MdMenu className="main-color" />}
+                        {isOpen ? <MdOutlineClose className="main-color" size={26} /> : <MdMenu className="main-color" size={26}/>}
                     </button>
                 </div>
             </nav>

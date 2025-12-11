@@ -5,7 +5,7 @@ import { TbTruckDelivery } from "react-icons/tb";
 
 export default function Servicos() {
     return (
-        <div className="mt-10">
+        <div className="mt-14">
             <div className="mb-4">
                 <h1 className="secondary-title">Nossos Serviços</h1>
             </div>
