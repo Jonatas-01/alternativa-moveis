@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function SobreNos() {
     return (
-        <div className="mt-14 mb-20">
+        <div className="mt-14">
             <div>
                 <h1 className="secondary-title">Sobre Nós</h1>
             </div>
@@ -28,21 +28,25 @@ export default function SobreNos() {
                     </div>
                 </div>
 
-                <div className="mt-3 w-full h-[140px] flex flex-col lg:flex-row sm:h-[200px] lg:h-auto gap-4 lg:gap-4">
-                    <Image
-                        src="/image/sobre-nos-1.jpg"
-                        alt="Sobre Nós Imagem de Manutenção"
-                        width={600}
-                        height={300}
-                        className="w-full h-full object-cover lg:w-1/2"
-                    />
-                    <Image
-                        src="/image/sobre-nos-2.jpeg"
-                        alt="Sobre Nós Imagem de Escola"
-                        width={600}
-                        height={300}
-                        className="w-full h-full object-cover lg:w-1/2"
-                    />
+                <div className="mt-3 w-full flex flex-col lg:flex-row gap-4 lg:gap-4">
+                    <div className="w-full h-[140px] sm:h-[200px] lg:h-auto">
+                        <Image
+                            src="/image/sobre-nos-1.jpg"
+                            alt="Sobre Nós Imagem de Manutenção"
+                            width={600}
+                            height={300}
+                            className="w-full h-full object-cover"
+                        />
+                    </div>
+                    <div className="w-full h-[140px] sm:h-[200px] lg:h-auto">
+                        <Image
+                            src="/image/sobre-nos-2.jpeg"
+                            alt="Sobre Nós Imagem de Escola"
+                            width={600}
+                            height={300}
+                            className="w-full h-full object-cover"
+                        />
+                    </div>
                 </div>
             </div>
             {/* <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-4">
