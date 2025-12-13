@@ -8,7 +8,8 @@
     --secondary: #e79a43;
     --paragraph: #4c4c4c;
     --placeholder: #fff;
-
+    --gold-placeholder: #b48811;
+    
     /* Fonts */
     --font-heading: "Syne", sans-serif;
     --font-body: "Montserrat", sans-serif;
@@ -29,6 +30,19 @@ h3 {
 
 p {
     color: var(--paragraph);
+}
+
+.gold-gradient-text {
+    background: linear-gradient(
+        to bottom,
+        #ebc980 0%,
+        #b48811 50%,
+        #a2790d 51%,
+        #bb9b49 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 main-color {
@@ -66,19 +80,6 @@ main-color {
     border-radius: 0.5rem;
     padding: 1rem;
     border-radius: 20px;
-}
-
-.gold-gradient-text {
-    background: linear-gradient(
-        to bottom,
-        #ebc980 0%,
-        #b48811 50%,
-        #a2790d 51%,
-        #bb9b49 100%
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
 }
 
 /* Embla Carousel Styles */

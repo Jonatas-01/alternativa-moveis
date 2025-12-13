@@ -1,16 +1,28 @@
 'use client'
 
 import { IoLogoWhatsapp } from "react-icons/io";
-import { MdMenu,MdOutlineClose } from "react-icons/md";
+import { MdMenu, MdOutlineClose } from "react-icons/md";
 import Link from "next/link"
 import { useState } from "react"
+import { usePathname } from "next/navigation"
 
 const Links = () => {
+    const pathname = usePathname();
+
+    const linkClass = (href: string) => {
+        const isActive = pathname === href;
+        return `font-medium transition-colors duration-200 ${
+            isActive 
+                ? 'gold-gradient-text border-b-2 border-[var(--gold-placeholder)]' 
+                : 'hover:text-[var(--gold-placeholder)]'
+        }`;
+    };
+
     return (
         <>
-            <Link className="font-medium" href="/">Início</Link>
-            <Link className="font-medium" href="/catalogo">Catálogo</Link>
-            <Link className="font-medium" href="/sobre-nos">Sobre Nós</Link>
+            <Link className={linkClass("/")} href="/">Início</Link>
+            <Link className={linkClass("/catalogo")} href="/catalogo">Catálogo</Link>
+            <Link className={linkClass("/sobre-nos")} href="/sobre-nos">Sobre Nós</Link>
         </>
     )
 }
@@ -33,7 +45,6 @@ export default function Navbar() {
             <nav className="w-1/2">
                 <div className="hidden md:flex justify-end text-lg items-center gap-8">
                     <Links />
-                    {/* Btn de contato */}
                     <OrcamentoBtn />
                 </div>
                 <div className="md:hidden flex justify-end">
@@ -56,7 +67,6 @@ export default function Navbar() {
             `}>
                 <div className="w-full bg-background-color-light flex flex-col items-center space-y-4 py-4 font-medium text-lg border-t border-gray-600">
                     <Links />
-                    {/* Btn de contato */}
                     <OrcamentoBtn />
                 </div>
             </div>
