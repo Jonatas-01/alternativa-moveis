@@ -9,21 +9,16 @@ export default function Home() {
   return (
     <main>
       <Hero />
-      <div className="container mx-auto px-6" id="servicos">
+      <div className="container mx-auto px-6 md:px-0" id="servicos">
         <Servicos />
       </div>
       <Destaque />
-      <div className="container mx-auto px-6" id="sobre-nos">
+      <div className="container mx-auto px-6 md:px-0" id="sobre-nos">
         <SobreNos />
       </div>
       <div className="bg-[#ebebeb]">
-        <div className='container mx-auto px-6'>
+        <div className='container mx-auto px-6 md:px-0'>
           <Chamada />
-        </div>
-      </div>
-      <div className="bg-[var(--primary)] text-white">
-        <div className="container mx-auto px-6">
-          <Footer />
         </div>
       </div>
     </main>
