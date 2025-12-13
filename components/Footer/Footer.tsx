@@ -26,8 +26,8 @@ export default function Footer() {
                 </div>
                 <div className="space-y-1">
                     <h3>Siga-nos</h3>
-                    <p><a href="https://api.whatsapp.com/send?phone=556232150996&text=Ol%C3%A1%2C%20Estava%20olhando%20seu%20cat%C3%A1logo%20e%20me%20interessei%20por%20um%20produto%20.%20" className="flex items-center gap-2"><FaWhatsapp /> Whatsapp</a></p>
-                    <p><a href="https://www.instagram.com/alternativamoveisgyn?igsh=MXB2OGd0NGd3djB3YQ==" className="flex items-center gap-2"> <FaInstagram /> Instagram</a></p>
+                    <p><Link href="https://api.whatsapp.com/send?phone=556232150996&text=Ol%C3%A1%2C%20Estava%20olhando%20seu%20cat%C3%A1logo%20e%20me%20interessei%20por%20um%20produto%20.%20" target="_blank" className="flex items-center gap-2"><FaWhatsapp /> Whatsapp</Link></p>
+                    <p><Link href="https://www.instagram.com/alternativamoveisgyn?igsh=MXB2OGd0NGd3djB3YQ==" target="_blank" className="flex items-center gap-2"> <FaInstagram /> Instagram</Link></p>
                 </div>
             </div>
 
