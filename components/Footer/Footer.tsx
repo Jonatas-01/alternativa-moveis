@@ -18,11 +18,11 @@ export default function Footer() {
                     <p><Link href="#servicos">Serviços</Link></p>
                     <p><Link href="/sobre-nos">Sobre Nós</Link></p>
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-1 overflow-hidden">
                     <h3>Contato</h3>
                     <p className="flex items-center gap-2"><FaHome className="lg:hidden"/> Av Alberto Miguel,859 St Campinas, Goiania - GO</p>
                     <p className="flex items-center gap-2"><FaPhoneAlt className="lg:hidden"/> (62) 3215-0996</p>
-                    <p className="flex items-center gap-2"> <MdEmail className="lg:hidden"/> leonardo.alternativamoveis@gmail.com</p>
+                    <p className="flex items-center text-sm sm:text-base gap-2 wrap-anywhere"> <MdEmail className="lg:hidden"/> leonardo.alternativamoveis@gmail.com</p>
                 </div>
                 <div className="space-y-1">
                     <h3>Siga-nos</h3>
