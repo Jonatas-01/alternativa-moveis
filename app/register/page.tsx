@@ -1,18 +1,24 @@
 'use client'
 
 import { useState } from 'react'
-import { FaUser, FaLock } from 'react-icons/fa'
-import { MdAdminPanelSettings } from 'react-icons/md'
+import { FaLock, FaUserPlus } from 'react-icons/fa'
+import { MdEmail, MdVerifiedUser } from 'react-icons/md'
 
-export default function LoginPage() {
+export default function RegisterPage() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [rememberMe, setRememberMe] = useState(false)
+    const [confirmPassword, setConfirmPassword] = useState('')
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        // TODO: Add login logic with Supabase
-        console.log({ email, password, rememberMe })
+        
+        if (password !== confirmPassword) {
+            alert('As senhas não coincidem!')
+            return
+        }
+        
+        // TODO: Add register logic with Supabase
+        console.log({ email, password })
     }
 
     return (
@@ -23,17 +29,17 @@ export default function LoginPage() {
             <div className="bg-white rounded-lg shadow-xl w-full max-w-md p-8">
                 {/* Icon */}
                 <div className="flex justify-center mb-6">
-                    <div className="bg-[var(--primary)] rounded-full p-4">
-                        <MdAdminPanelSettings className="text-white text-3xl" />
+                    <div className="bg-gray-100 rounded-full p-4">
+                        <FaUserPlus className="text-3xl" />
                     </div>
                 </div>
 
                 {/* Title */}
                 <h1 className="text-2xl font-bold text-center mb-2">
-                    Login Administrativo
+                    Registro de Usuário
                 </h1>
                 <p className="text-center text-sm mb-8">
-                    Entre com suas credenciais para acessar o sistema.
+                    Preencha os campos abaixo para criar sua conta.
                 </p>
 
                 {/* Form */}
@@ -44,12 +50,12 @@ export default function LoginPage() {
                             Email
                         </label>
                         <div className="relative">
-                            <FaUser className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                            <MdEmail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                             <input
                                 type="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                placeholder="admin@alternativamoveis.com.br"
+                                placeholder="nome@exemplo.com"
                                 className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent bg-gray-50"
                                 required
                             />
@@ -58,8 +64,8 @@ export default function LoginPage() {
 
                     {/* Password Field */}
                     <div>
-                        <label className="block text-sm font-medium text-[var(--foreground)] mb-2">
-                            Senha
+                        <label className="block text-sm font-medium mb-2">
+                            Criar Senha
                         </label>
                         <div className="relative">
                             <FaLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
@@ -74,40 +80,38 @@ export default function LoginPage() {
                         </div>
                     </div>
 
-                    {/* Remember Me & Forgot Password */}
-                    <div className="flex items-center justify-between">
-                        <label className="flex items-center gap-2 cursor-pointer">
-                            <input
-                                type="checkbox"
-                                checked={rememberMe}
-                                onChange={(e) => setRememberMe(e.target.checked)}
-                                className="w-4 h-4 rounded border-gray-300 focus:ring-[var(--primary)]"
-                            />
-                            <span className="text-sm">Lembrar-me</span>
+                    {/* Confirm Password Field */}
+                    <div>
+                        <label className="block text-sm font-medium mb-2">
+                            Confirmar Senha
                         </label>
-                        <a href="#" className="text-sm text-[var(--secondary)] hover:underline font-medium">
-                            Esqueceu a senha?
-                        </a>
+                        <div className="relative">
+                            <MdVerifiedUser className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                            <input
+                                type="password"
+                                value={confirmPassword}
+                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                placeholder="••••••••"
+                                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent bg-gray-50"
+                                required
+                            />
+                        </div>
                     </div>
 
                     <button
                         type="submit"
                         className="w-full bg-[var(--primary)] text-white py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity duration-200"
                     >
-                        Entrar
+                        Registrar
                     </button>
-
-                    <p className="text-center text-sm">
-                        Não tem uma conta?{' '}
-                        <a href="/register" className="text-[var(--secondary)] hover:underline font-medium">
-                            Criar conta
-                        </a>
-                    </p>
                 </form>
 
                 <div className="mt-6 pt-6 border-t border-gray-200">
-                    <p className="text-center text-xs">
-                        Acesso restrito. Todas as atividades são monitoradas.
+                    <p className="text-center text-sm text-[var(--paragraph)]">
+                        Já possui uma conta?{' '}
+                        <a href="/login" className="text-[var(--secondary)] hover:underline font-medium">
+                            Faça Login
+                        </a>
                     </p>
                 </div>
             </div>
