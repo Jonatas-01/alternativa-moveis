@@ -8,7 +8,7 @@
     --secondary: #e79a43;
     --paragraph: #4c4c4c;
     --placeholder: #fff;
-    --gold-placeholder: #b48811;
+    --gold-placeholder: #c2961d;
     
     /* Fonts */
     --font-heading: "Syne", sans-serif;
@@ -63,6 +63,12 @@ main-color {
     padding: 0.4rem 1.4rem;
     font-family: var(--font-heading);
     font-weight: 700;
+    cursor: pointer;
+}
+
+.botoes:hover {
+    transform: scale(1.06);
+    transition: transform 0.3s ease;
 }
 
 /* Navbar */
@@ -71,6 +77,11 @@ main-color {
     color: var(--placeholder);
     padding: 0.4rem 0.8rem;
     border-radius: 0.4rem;
+}
+
+.orcamento-btn:hover {
+    transform: scale(1.06);
+    transition: transform 0.3s ease;
 }
 
 /* Serviços */

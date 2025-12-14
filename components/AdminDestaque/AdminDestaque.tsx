@@ -16,13 +16,6 @@ const produtos = [
         descricao: "armário espaçoso com acabamento em madeira de alta qualidade",
         preco: 499.99
     },
-    {
-        foto: "/image/gaveteira.png",
-        categoria: "Armários",
-        nome: "Gaveteira",
-        descricao: "gaveteira prática com várias gavetas para organização",
-        preco: 299.99
-    }
 ]
 
 export default function AdminDestaque() {
@@ -51,15 +44,16 @@ export default function AdminDestaque() {
                     </div>
                 ))}
                 {Array.from({ length: Math.max(0, 4 - produtos.length) }).map((_, index) => (
-                    <div key={`slot-${index}`} className="py-6 flex justify-center items-center flex-col gap-2 text-gray-400 border-dashed border-2 border-gray-300 rounded-xl ">
+                    <div key={`slot-${index}`} className="py-6 sm:py-3 flex justify-center items-center flex-col gap-2 text-gray-400 border-dashed border-2 border-gray-300 bg-gray-100 rounded-xl ">
                         <p><IoIosAddCircle size={30} /></p>
                         <p>Slot Disponível</p>
+                        <p className="text-sm">Clique para adicionar</p>
                     </div>
                 ))}
 
             </div>
 
-            <div className="flex justify-end mt-6 border-t border-gray-300 pt-4">
+            <div className="flex justify-end mt-6 border-t border-gray-200 pt-4">
                 <button className="botoes flex items-center gap-2 rounded-md"><IoIosSave size={20} /> Salvar Alterações</button>
             </div>
         </div>
