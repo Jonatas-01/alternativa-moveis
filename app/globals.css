@@ -88,9 +88,21 @@ main-color {
 .servico-card {
     background-color: #ffffff;
     border: 1px solid #d7d7d7;
-    border-radius: 0.5rem;
     padding: 1rem;
     border-radius: 20px;
+}
+
+/* Admin Page */
+.Cadeiras-tag {
+    @apply bg-blue-100 text-blue-800;
+}
+
+.Armários-tag {
+    @apply bg-green-100 text-green-800;
+}
+
+.Mesas-tag {
+    @apply bg-yellow-100 text-yellow-800;
 }
 
 /* Embla Carousel Styles */

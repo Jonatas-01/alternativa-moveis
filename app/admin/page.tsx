@@ -1,5 +1,6 @@
 import { IoMdAdd } from "react-icons/io";
 import AdminDestaque from "@/components/AdminDestaque/AdminDestaque";
+import AdminProdutos from "@/components/AdminProdutos/AdminProdutos";
 
 export default function Dashboard() {
     return (
@@ -15,7 +16,9 @@ export default function Dashboard() {
                     </div>
                 </div>
                 <AdminDestaque />
+                <AdminProdutos />
             </div>
+            
         </div>
     )
 }
