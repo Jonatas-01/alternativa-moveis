@@ -1,24 +1,66 @@
 'use client'
 
 import { useState } from 'react'
-import { FaLock, FaUserPlus } from 'react-icons/fa'
+import { useRouter } from 'next/navigation'
+import { FaLock, FaUserPlus, FaEye, FaEyeSlash } from 'react-icons/fa'
 import { MdEmail, MdVerifiedUser } from 'react-icons/md'
+import { supabase } from "@/lib/supabase-client"
 
 export default function RegisterPage() {
+    const router = useRouter()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
+    const [passwordError, setPasswordError] = useState('')
+    const [passwordNotMatchError, setPasswordNotMatchError] = useState('')
+    const [showPassword, setShowPassword] = useState(false)
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const validatePassword = (pwd: string) => {
+        const minLength = pwd.length >= 8
+        const hasUppercase = /[A-Z]/.test(pwd)
+        const hasLowercase = /[a-z]/.test(pwd)
+        const hasNumber = /[0-9]/.test(pwd)
+        const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(pwd)
+
+        return {
+            isValid: minLength && hasUppercase && hasLowercase && hasNumber && hasSpecial,
+            minLength,
+            hasUppercase,
+            hasLowercase,
+            hasNumber,
+            hasSpecial
+        }
+    }
+
+    const passwordValidation = validatePassword(password)
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        
-        if (password !== confirmPassword) {
-            alert('As senhas não coincidem!')
+
+        if (!passwordValidation.isValid) {
+            setPasswordError('A senha não atende aos requisitos de segurança.')
             return
         }
-        
-        // TODO: Add register logic with Supabase
-        console.log({ email, password })
+
+        if (password !== confirmPassword) {
+            setPasswordNotMatchError('As senhas não coincidem.')
+            return
+        }
+
+        const { error } = await supabase.auth.signUp({
+            email,
+            password
+        })
+
+        if (error) {
+            console.error('Erro ao registrar:', error.message)
+            return
+        }
+
+        // Registro bem-sucedido - redirecionar para home com mensagem de sucesso
+        sessionStorage.setItem('registrationSuccess', 'true')
+        router.push('/')
     }
 
     return (
@@ -70,14 +112,48 @@ export default function RegisterPage() {
                         <div className="relative">
                             <FaLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                             <input
-                                type="password"
+                                type={showPassword ? "text" : "password"}
                                 value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                onChange={(e) => {
+                                    setPassword(e.target.value)
+                                    setPasswordError('')
+                                }}
                                 placeholder="••••••••"
-                                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent bg-gray-50"
+                                className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent bg-gray-50"
                                 required
                             />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                            >
+                                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                            </button>
                         </div>
+                        
+                        {/* Password Requirements */}
+                        {password && (
+                            <div className="mt-2 text-xs space-y-1">
+                                <p style={{ color: passwordValidation.minLength ? '#16a34a' : '#ef4444' }}>
+                                    {passwordValidation.minLength ? '✓' : '✗'} Mínimo 8 caracteres
+                                </p>
+                                <p style={{ color: passwordValidation.hasUppercase ? '#16a34a' : '#ef4444' }}>
+                                    {passwordValidation.hasUppercase ? '✓' : '✗'} Uma letra maiúscula
+                                </p>
+                                <p style={{ color: passwordValidation.hasLowercase ? '#16a34a' : '#ef4444' }}>
+                                    {passwordValidation.hasLowercase ? '✓' : '✗'} Uma letra minúscula
+                                </p>
+                                <p style={{ color: passwordValidation.hasNumber ? '#16a34a' : '#ef4444' }}>
+                                    {passwordValidation.hasNumber ? '✓' : '✗'} Um número
+                                </p>
+                                <p style={{ color: passwordValidation.hasSpecial ? '#16a34a' : '#ef4444' }}>
+                                    {passwordValidation.hasSpecial ? '✓' : '✗'} Um caractere especial (!@#$%^&*)
+                                </p>
+                            </div>
+                        )}
+                        {passwordError && (
+                            <p className="mt-2 text-xs" style={{ color: '#ef4444' }}>{passwordError}</p>
+                        )}
                     </div>
 
                     {/* Confirm Password Field */}
@@ -88,14 +164,24 @@ export default function RegisterPage() {
                         <div className="relative">
                             <MdVerifiedUser className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                             <input
-                                type="password"
+                                type={showConfirmPassword ? "text" : "password"}
                                 value={confirmPassword}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                                 placeholder="••••••••"
-                                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent bg-gray-50"
+                                className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent bg-gray-50"
                                 required
                             />
+                            <button
+                                type="button"
+                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                            >
+                                {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                            </button>
                         </div>
+                        {passwordNotMatchError && (
+                            <p className="mt-2 text-xs" style={{ color: '#ef4444' }}>{passwordNotMatchError}</p>
+                        )}
                     </div>
 
                     <button

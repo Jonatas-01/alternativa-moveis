@@ -1,5 +1,6 @@
 'use client'
 
+import { supabase } from '@/lib/supabase-client'
 import { useState } from 'react'
 import { FaUser, FaLock } from 'react-icons/fa'
 import { MdAdminPanelSettings } from 'react-icons/md'
@@ -9,10 +10,18 @@ export default function LoginPage() {
     const [password, setPassword] = useState('')
     const [rememberMe, setRememberMe] = useState(false)
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        // TODO: Add login logic with Supabase
-        console.log({ email, password, rememberMe })
+
+        const { error } = await supabase.auth.signInWithPassword({
+            email,
+            password
+        })
+
+        if (error) {
+            console.error('Erro ao fazer login:', error.message)
+            return
+        }
     }
 
     return (
