@@ -15,7 +15,6 @@ export default function SuccessAlert() {
 
     useEffect(() => {
         if (showAlert) {
-            // Auto-hide after 5 seconds
             const timer = setTimeout(() => {
                 setShowAlert(false)
             }, 5000)

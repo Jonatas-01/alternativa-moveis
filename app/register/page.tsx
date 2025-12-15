@@ -21,7 +21,7 @@ export default function RegisterPage() {
         const hasUppercase = /[A-Z]/.test(pwd)
         const hasLowercase = /[a-z]/.test(pwd)
         const hasNumber = /[0-9]/.test(pwd)
-        const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(pwd)
+        const hasSpecial = /[!@#$%^&*(),.?":{}|<>-]/.test(pwd)
 
         return {
             isValid: minLength && hasUppercase && hasLowercase && hasNumber && hasSpecial,
@@ -58,7 +58,6 @@ export default function RegisterPage() {
             return
         }
 
-        // Registro bem-sucedido - redirecionar para home com mensagem de sucesso
         sessionStorage.setItem('registrationSuccess', 'true')
         router.push('/')
     }
@@ -69,14 +68,12 @@ export default function RegisterPage() {
             style={{ backgroundImage: "linear-gradient(rgba(3, 29, 64, 0.85), rgba(3, 29, 64, 0.85)), url('/image/hero-image.jpg')" }}
         >
             <div className="bg-white rounded-lg shadow-xl w-full max-w-md p-8">
-                {/* Icon */}
                 <div className="flex justify-center mb-6">
                     <div className="bg-gray-100 rounded-full p-4">
                         <FaUserPlus className="text-3xl" />
                     </div>
                 </div>
 
-                {/* Title */}
                 <h1 className="text-2xl font-bold text-center mb-2">
                     Registro de Usuário
                 </h1>
@@ -84,7 +81,6 @@ export default function RegisterPage() {
                     Preencha os campos abaixo para criar sua conta.
                 </p>
 
-                {/* Form */}
                 <form onSubmit={handleSubmit} className="space-y-5">
                     {/* Email Field */}
                     <div>
@@ -127,7 +123,7 @@ export default function RegisterPage() {
                                 onClick={() => setShowPassword(!showPassword)}
                                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                             >
-                                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                                {showPassword ? <FaEyeSlash size={24} /> : <FaEye size={24} />}
                             </button>
                         </div>
                         
@@ -147,7 +143,7 @@ export default function RegisterPage() {
                                     {passwordValidation.hasNumber ? '✓' : '✗'} Um número
                                 </p>
                                 <p style={{ color: passwordValidation.hasSpecial ? '#16a34a' : '#ef4444' }}>
-                                    {passwordValidation.hasSpecial ? '✓' : '✗'} Um caractere especial (!@#$%^&*)
+                                    {passwordValidation.hasSpecial ? '✓' : '✗'} Um caractere especial (!@#$%^&*-)
                                 </p>
                             </div>
                         )}
@@ -176,7 +172,7 @@ export default function RegisterPage() {
                                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                             >
-                                {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                                {showConfirmPassword ? <FaEyeSlash size={24} /> : <FaEye size={24} />}
                             </button>
                         </div>
                         {passwordNotMatchError && (

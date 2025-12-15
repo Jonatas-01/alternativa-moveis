@@ -30,14 +30,12 @@ export default function LoginPage() {
             style={{ backgroundImage: "linear-gradient(rgba(3, 29, 64, 0.85), rgba(3, 29, 64, 0.85)), url('/image/hero-image.jpg')" }}
         >
             <div className="bg-white rounded-lg shadow-xl w-full max-w-md p-8">
-                {/* Icon */}
                 <div className="flex justify-center mb-6">
                     <div className="bg-[var(--primary)] rounded-full p-4">
                         <MdAdminPanelSettings className="text-white text-3xl" />
                     </div>
                 </div>
 
-                {/* Title */}
                 <h1 className="text-2xl font-bold text-center mb-2">
                     Login Administrativo
                 </h1>
@@ -45,7 +43,6 @@ export default function LoginPage() {
                     Entre com suas credenciais para acessar o sistema.
                 </p>
 
-                {/* Form */}
                 <form onSubmit={handleSubmit} className="space-y-5">
                     {/* Email Field */}
                     <div>
