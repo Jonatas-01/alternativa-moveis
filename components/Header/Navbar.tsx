@@ -14,8 +14,8 @@ const Links = () => {
     const linkClass = (href: string) => {
         const isActive = pathname === href;
         return `font-medium transition-colors duration-200 ${isActive
-                ? 'gold-gradient-text border-b-2 border-[var(--gold-placeholder)]'
-                : 'hover:text-[var(--gold-placeholder)]'
+            ? 'gold-gradient-text border-b-2 border-[var(--gold-placeholder)]'
+            : 'hover:text-[var(--gold-placeholder)]'
             }`;
     };
 
@@ -36,7 +36,7 @@ const OrcamentoBtn = () => {
 
 const AdminBtn = () => {
     return (
-        <Link href="/admin" className="botoes">Dashboard</Link>
+        <Link href="/admin" className="botoes rounded-lg">Dashboard</Link>
     )
 }
 
@@ -55,15 +55,23 @@ export default function Navbar() {
             const { data: { session } } = await supabase.auth.getSession()
             setSession(session)
         }
+
         checkAuth()
-    }, []);
+
+        // Listen for auth state changes
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+            setSession(session)
+        })
+
+        return () => subscription.unsubscribe()
+    }, [])
 
     return (
         <>
             <nav className="w-1/2">
                 <div className="hidden md:flex justify-end text-lg items-center gap-8">
                     <Links />
-                    {session ? (<OrcamentoBtn />) : (<AdminBtn />)}
+                    {session ? (<AdminBtn />) : (<OrcamentoBtn />)}
                 </div>
                 <div className="md:hidden flex justify-end">
                     <button
@@ -85,7 +93,7 @@ export default function Navbar() {
             `}>
                 <div className="w-full bg-background-color-light flex flex-col items-center space-y-4 py-4 font-medium text-lg border-t border-gray-600">
                     <Links />
-                    {session ? (<OrcamentoBtn />) : (<AdminBtn />)}
+                    {session ? (<AdminBtn />) : (<OrcamentoBtn />)}
                 </div>
             </div>
         </>

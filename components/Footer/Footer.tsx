@@ -10,15 +10,23 @@ import { Session } from "@supabase/supabase-js";
 
 export default function Footer() {
     const [session, setSession] = useState<Session | null>(null)
-    
+
     useEffect(() => {
-            const checkAuth = async () => {
-                const { data: { session } } = await supabase.auth.getSession()
-                setSession(session)
-            }
-    
-            checkAuth()
-        }, [])
+        const checkAuth = async () => {
+            const { data: { session } } = await supabase.auth.getSession()
+            setSession(session)
+        }
+
+        checkAuth()
+
+        // Listen for auth state changes
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+            setSession(session)
+        })
+
+        return () => subscription.unsubscribe()
+    }, [])
+
     return (
         <footer className="">
             <div className="pt-6 flex flex-wrap lg:grid grid-flow-col grid-cols-5 gap-6">
@@ -35,9 +43,9 @@ export default function Footer() {
                 </div>
                 <div className="space-y-1 overflow-hidden">
                     <h3>Contato</h3>
-                    <p className="flex items-center gap-2"><FaHome className="lg:hidden"/> Av Alberto Miguel,859 St Campinas, Goiania - GO</p>
-                    <p className="flex items-center gap-2"><FaPhoneAlt className="lg:hidden"/> (62) 3215-0996</p>
-                    <p className="flex items-center text-sm sm:text-base gap-2 wrap-anywhere"> <MdEmail className="lg:hidden"/> leonardo.alternativamoveis@gmail.com</p>
+                    <p className="flex items-center gap-2"><FaHome className="lg:hidden" /> Av Alberto Miguel,859 St Campinas, Goiania - GO</p>
+                    <p className="flex items-center gap-2"><FaPhoneAlt className="lg:hidden" /> (62) 3215-0996</p>
+                    <p className="flex items-center text-sm sm:text-base gap-2 wrap-anywhere"> <MdEmail className="lg:hidden" /> leonardo.alternativamoveis@gmail.com</p>
                 </div>
                 <div className="space-y-1">
                     <h3>Siga-nos</h3>
