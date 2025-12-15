@@ -1,9 +1,24 @@
+'use client'
+
 import { FaInstagram, FaWhatsapp, FaHome } from "react-icons/fa";
 import { FaPhoneAlt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import Link from 'next/link';
+import { supabase } from "@/lib/supabase-client";
+import { useEffect, useState } from "react";
+import { Session } from "@supabase/supabase-js";
 
 export default function Footer() {
+    const [session, setSession] = useState<Session | null>(null)
+    
+    useEffect(() => {
+            const checkAuth = async () => {
+                const { data: { session } } = await supabase.auth.getSession()
+                setSession(session)
+            }
+    
+            checkAuth()
+        }, [])
     return (
         <footer className="">
             <div className="pt-6 flex flex-wrap lg:grid grid-flow-col grid-cols-5 gap-6">
@@ -28,7 +43,7 @@ export default function Footer() {
                     <h3>Siga-nos</h3>
                     <p><Link href="https://api.whatsapp.com/send?phone=556232150996&text=Ol%C3%A1%2C%20Estava%20olhando%20seu%20cat%C3%A1logo%20e%20me%20interessei%20por%20um%20produto%20.%20" target="_blank" className="flex items-center gap-2"><FaWhatsapp /> Whatsapp</Link></p>
                     <p><Link href="https://www.instagram.com/alternativamoveisgyn?igsh=MXB2OGd0NGd3djB3YQ==" target="_blank" className="flex items-center gap-2"> <FaInstagram /> Instagram</Link></p>
-                    <p><Link href="/login">Login</Link></p>
+                    {!session && <p><Link href="/login">Login</Link></p>}
                 </div>
             </div>
 
