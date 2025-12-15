@@ -1,17 +1,35 @@
 'use client'
 
 import { supabase } from '@/lib/supabase-client'
-import { useState } from 'react'
-import { FaUser, FaLock } from 'react-icons/fa'
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import { FaUser, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa'
 import { MdAdminPanelSettings } from 'react-icons/md'
 
 export default function LoginPage() {
+    const router = useRouter()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [rememberMe, setRememberMe] = useState(false)
+    const [showPassword, setShowPassword] = useState(false)
+    const [error, setError] = useState('')
+
+    useEffect(() => {
+        const checkAuth = async () => {
+            const { data: { session } } = await supabase.auth.getSession()
+
+            if (session) {
+                router.push('/')
+                return
+            }
+        }
+
+        checkAuth()
+    }, [router])
+
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
+        setError('')
 
         const { error } = await supabase.auth.signInWithPassword({
             email,
@@ -19,9 +37,14 @@ export default function LoginPage() {
         })
 
         if (error) {
+            setError('Email ou senha incorretos.')
             console.error('Erro ao fazer login:', error.message)
             return
         }
+
+        // Login bem-sucedido - redirecionar para home com mensagem de sucesso
+        sessionStorage.setItem('loginSuccess', 'true')
+        router.push('/')
     }
 
     return (
@@ -44,6 +67,13 @@ export default function LoginPage() {
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-5">
+                    {/* Error Message */}
+                    {error && (
+                        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+                            {error}
+                        </div>
+                    )}
+
                     {/* Email Field */}
                     <div>
                         <label className="block text-sm font-medium mb-2">
@@ -70,30 +100,21 @@ export default function LoginPage() {
                         <div className="relative">
                             <FaLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                             <input
-                                type="password"
+                                type={showPassword ? 'text' : 'password'}
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 placeholder="••••••••"
-                                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent bg-gray-50"
+                                className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent bg-gray-50"
                                 required
                             />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                            >
+                                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                            </button>
                         </div>
-                    </div>
-
-                    {/* Remember Me & Forgot Password */}
-                    <div className="flex items-center justify-between">
-                        <label className="flex items-center gap-2 cursor-pointer">
-                            <input
-                                type="checkbox"
-                                checked={rememberMe}
-                                onChange={(e) => setRememberMe(e.target.checked)}
-                                className="w-4 h-4 rounded border-gray-300 focus:ring-[var(--primary)]"
-                            />
-                            <span className="text-sm">Lembrar-me</span>
-                        </label>
-                        <a href="#" className="text-sm text-[var(--secondary)] hover:underline font-medium">
-                            Esqueceu a senha?
-                        </a>
                     </div>
 
                     <button
