@@ -6,11 +6,13 @@ import { IoMdAdd } from "react-icons/io";
 import AdminDestaque from "@/components/AdminDestaque/AdminDestaque";
 import AdminProdutos from "@/components/AdminProdutos/AdminProdutos";
 import { supabase } from "@/lib/supabase-client";
+import LogoutModal from "@/components/Auth/LogoutModal";
 
 export default function Dashboard() {
     const router = useRouter()
     const [loading, setLoading] = useState(true)
     const [isAuthenticated, setIsAuthenticated] = useState(false)
+    const [showLogoutModal, setShowLogoutModal] = useState(false)
 
     useEffect(() => {
         const checkAuth = async () => {
@@ -69,12 +71,24 @@ export default function Dashboard() {
                         <button className="botoes text-md sm:text-xl flex items-center gap-2 rounded-md"><IoMdAdd /> Novo Produto</button>
                     </div>
                 </div>
+
                 <AdminDestaque />
+
                 <AdminProdutos />
+
                 <div className="flex justify-end mb-6">
-                    <button className="bg-red-500 text-white font-semibold px-4 py-2 rounded-md hover:cursor-pointer hover:scale-105 transition-transform duration-200" onClick={logout}>Sair</button>
+                    <button 
+                        className="bg-red-500 text-white font-semibold px-4 py-2 rounded-md hover:cursor-pointer hover:scale-105 transition-transform duration-200" 
+                        onClick={() => setShowLogoutModal(true)}
+                    >
+                        Sair
+                    </button>
                 </div>
             </div>
+
+            {showLogoutModal && (
+                <LogoutModal setShowLogoutModal={setShowLogoutModal} logout={logout} />
+            )}
 
         </div>
     )
