@@ -17,7 +17,7 @@ export default function Dashboard() {
             const { data: { session } } = await supabase.auth.getSession()
             
             if (!session) {
-                router.push('/login')
+                router.push('/auth/login')
                 return
             }
             
@@ -30,7 +30,7 @@ export default function Dashboard() {
         // Listen for auth changes
         const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
             if (!session) {
-                router.push('/login')
+                router.push('/auth/login')
             }
         })
 
@@ -39,7 +39,7 @@ export default function Dashboard() {
 
     const logout = async () => {
         await supabase.auth.signOut()
-        router.push('/login')
+        router.push('/')
     }
 
     if (loading) {

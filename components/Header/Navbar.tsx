@@ -36,7 +36,7 @@ const OrcamentoBtn = () => {
 
 const AdminBtn = () => {
     return (
-        <Link href="/admin" className="botoes rounded-lg">Dashboard</Link>
+        <Link href="/dashboard" className="botoes rounded-lg">Dashboard</Link>
     )
 }
 
