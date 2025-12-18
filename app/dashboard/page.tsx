@@ -8,6 +8,7 @@ import AdminDestaque from "@/components/AdminDestaque/AdminDestaque";
 import AdminProdutos from "@/components/AdminProdutos/AdminProdutos";
 import { supabase } from "@/lib/supabase-client";
 import LogoutModal from "@/components/Auth/LogoutModal";
+import NovoProduto from "@/components/NovoProduto/NovoProduto";
 import CategoriaModal from "@/components/CategoriaModal/CategoriaModal";
 
 export default function Dashboard() {
@@ -16,6 +17,7 @@ export default function Dashboard() {
     const [isAuthenticated, setIsAuthenticated] = useState(false)
     const [showLogoutModal, setShowLogoutModal] = useState(false)
     const [showCategoriasModal, setShowCategoriasModal] = useState(false)
+    const [showNovoProdutoModal, setShowNovoProdutoModal] = useState(false)
 
     useEffect(() => {
         const checkAuth = async () => {
@@ -77,17 +79,19 @@ export default function Dashboard() {
                             </button>
                         </div>
                         <div>
-                            <button className="botoes text-md sm:text-xl flex items-center gap-2 rounded-md">
+                            <button className="botoes text-md sm:text-xl flex items-center gap-2 rounded-md" onClick={() => setShowNovoProdutoModal(true)}>
                                 <IoMdAdd /> Novo Produto
                             </button>
                         </div>
 
                     </div>
+                    {showNovoProdutoModal && (
+                        <NovoProduto setShowNovoProdutoModal={setShowNovoProdutoModal} />
+                    )}
                     {showCategoriasModal && (
                         <CategoriaModal setShowCategoriasModal={setShowCategoriasModal} />
                     )}
                 </div>
-
 
                 <AdminDestaque />
 

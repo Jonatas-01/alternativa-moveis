@@ -105,6 +105,22 @@ main-color {
     @apply bg-yellow-100 text-yellow-800;
 }
 
+.categoria-btn {
+    background-color: var(--placeholder);
+    padding: 0.4rem 1rem;
+    border: #d7d7d7 1px solid;
+    border-radius: 0.4rem;
+    padding: 0.4rem 1.4rem;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.categoria-btn:hover {
+    transform: scale(1.06);
+    transition: transform 0.3s ease;
+}
+
 /* Embla Carousel Styles */
 .embla {
     margin: auto;
