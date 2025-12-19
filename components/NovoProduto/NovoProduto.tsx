@@ -80,6 +80,12 @@ export default function NovoProduto({ setShowNovoProdutoModal }: { setShowNovoPr
             return
         }
 
+        const priceValue = parseFloat(formData.get('price') as string)
+        if (isNaN(priceValue) || priceValue < 0) {
+            setErros("Por favor, insira um valor válido para o preço.")
+            return
+        }
+
         setUploading(true)
 
         try {
@@ -103,12 +109,6 @@ export default function NovoProduto({ setShowNovoProdutoModal }: { setShowNovoPr
 
             // Prepare product data
             const photoUrls = uploadData.images.map((img: { url: string }) => img.url)
-
-            const priceValue = parseFloat(formData.get('price') as string)
-            if (isNaN(priceValue)) {
-                setErros("Por favor, insira um valor válido para o preço.")
-                return
-            }
 
             const productData = {
                 name: formData.get('name'),
@@ -197,7 +197,7 @@ export default function NovoProduto({ setShowNovoProdutoModal }: { setShowNovoPr
                                 </div>
                                 <div>
                                     <label className="block mb-1 font-medium">Valor (R$)</label>
-                                    <input type="number" name="price" className="w-full border border-gray-300 rounded-md p-2" placeholder="R$ 0,00" required />
+                                    <input type="number" step="0.01" name="price" className="w-full border border-gray-300 rounded-md p-2" placeholder="R$ 0,00" required />
                                 </div>
                             </div>
 
