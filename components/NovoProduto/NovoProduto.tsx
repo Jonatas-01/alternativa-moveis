@@ -1,12 +1,12 @@
 import { supabase } from "@/lib/supabase-client";
-import { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { RxCross1 } from "react-icons/rx";
 import { MdOutlineAddAPhoto, MdImage } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import Image from "next/image";
 
 interface Category {
-    id: number;
+    id: string;
     name: string;
     created_at: string;
     color: string;
@@ -17,20 +17,22 @@ export default function NovoProduto({ setShowNovoProdutoModal }: { setShowNovoPr
     const [selectedImages, setSelectedImages] = useState<File[]>([])
     const [previewImage, setPreviewImage] = useState<string[]>([])
     const fileInputRef = useRef<HTMLInputElement>(null)
+    const [erros, setErros] = useState<string | null>(null)
+    const [uploading, setUploading] = useState(false)
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = Array.from(e.target.files || [])
 
         const totalImages = selectedImages.length + files.length
         if (totalImages > 3) {
-            alert("Você pode enviar no máximo 3 imagens.")
+            setErros("Você pode enviar no máximo 3 imagens.")
             return
         }
 
         const validTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg']
         const invalidFile = files.find(file => !validTypes.includes(file.type));
         if (invalidFile) {
-            alert("Tipo de arquivo inválido. Apenas JPEG, PNG, WEBP e JPG são permitidos.")
+            setErros("Tipo de arquivo inválido. Apenas JPEG, PNG, WEBP e JPG são permitidos.")
             return
         }
 
@@ -38,14 +40,14 @@ export default function NovoProduto({ setShowNovoProdutoModal }: { setShowNovoPr
         const maxSize = 5 * 1024 * 1024
         const oversizedFile = files.find(file => file.size > maxSize)
         if (oversizedFile) {
-            alert("Cada imagem deve ter no máximo 5MB.")
+            setErros("Cada imagem deve ter no máximo 5MB.")
             return
         }
 
         // Add new files to existing ones
         const newSelectedImages = [...selectedImages, ...files]
         setSelectedImages(newSelectedImages)
-        
+
         const newPreviews = files.map(file => URL.createObjectURL(file))
         setPreviewImage([...previewImage, ...newPreviews])
     }
@@ -53,10 +55,9 @@ export default function NovoProduto({ setShowNovoProdutoModal }: { setShowNovoPr
     const handleRemoveImage = (index: number) => {
         const newSelectedImages = selectedImages.filter((_, i) => i !== index)
         const newPreviews = previewImage.filter((_, i) => i !== index)
-        
-        // Revoke the URL to free memory
+
         URL.revokeObjectURL(previewImage[index])
-        
+
         setSelectedImages(newSelectedImages)
         setPreviewImage(newPreviews)
     }
@@ -64,6 +65,81 @@ export default function NovoProduto({ setShowNovoProdutoModal }: { setShowNovoPr
     const handleUploadClick = () => {
         if (selectedImages.length < 3) {
             fileInputRef.current?.click()
+        }
+    }
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        setErros(null)
+
+        const form = e.currentTarget;
+        const formData = new FormData(form)
+
+        if (selectedImages.length === 0) {
+            setErros("Por favor, envie pelo menos uma imagem do produto.")
+            return
+        }
+
+        setUploading(true)
+
+        try {
+            // Upload images to Cloudinary
+            const uploadFormData = new FormData()
+            selectedImages.forEach((image) => {
+                uploadFormData.append('files', image)
+            })
+
+            const uploadResponse = await fetch('/api/upload', {
+                method: 'POST',
+                body: uploadFormData
+            })
+
+            const uploadData = await uploadResponse.json()
+
+            if (!uploadResponse.ok) {
+                setErros("Erro ao enviar imagens. Tente novamente.")
+                return
+            }
+
+            // Prepare product data
+            const photoUrls = uploadData.images.map((img: { url: string }) => img.url)
+
+            const priceValue = parseFloat(formData.get('price') as string)
+            if (isNaN(priceValue)) {
+                setErros("Por favor, insira um valor válido para o preço.")
+                return
+            }
+
+            const productData = {
+                name: formData.get('name'),
+                category_id: formData.get('category_id'),
+                price: priceValue,
+                brief_description: formData.get('brief_description'),
+                detailed_description: formData.get('detailed_description'),
+                photos: photoUrls
+            }
+
+            // Insert product into database
+            const { error } = await supabase.from('products').insert(productData)
+
+            if (error) {
+                console.error("Erro Supabase:", error)
+                setErros("Erro ao adicionar produto ao banco de dados. Tente novamente.")
+                return
+            }
+
+            // Success
+            form.reset()
+            setSelectedImages([])
+            setPreviewImage([])
+            setShowNovoProdutoModal(false)
+
+        } catch (error) {
+            console.error("Erro ao adicionar produto:", error)
+            setErros("Erro ao adicionar produto. Tente novamente.")
+            return
+        } finally {
+            setUploading(false)
         }
     }
 
@@ -97,21 +173,23 @@ export default function NovoProduto({ setShowNovoProdutoModal }: { setShowNovoPr
                     <button className="hover:scale-110 transition-transform duration-200 cursor-pointer" onClick={() => setShowNovoProdutoModal(false)}><RxCross1 /></button>
                 </div>
 
+                {erros && <div className="text-red-500 px-6 py-2 bg-red-50 border-b border-red-200">{erros}</div>}
+
                 {/* Formulário de novo produto */}
-                <form className="overflow-y-auto flex-1 p-6 pt-4">
+                <form className="overflow-y-auto flex-1 p-6 pt-4" onSubmit={handleSubmit}>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div className="col-span-1 md:col-span-2 space-y-4">
 
                             <div>
                                 <label className="block mb-1 font-medium">Nome do Produto</label>
-                                <input type="text" className="w-full border border-gray-300 rounded-md p-2" placeholder="Ex: Cadeira de Escritório Ergonomica" />
+                                <input type="text" name="name" className="w-full border border-gray-300 rounded-md p-2" placeholder="Ex: Cadeira de Escritório Ergonomica" required />
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                                 <div>
                                     <label className="block mb-1 font-medium">Categoria</label>
-                                    <select className="w-full border border-gray-300 rounded-md p-2">
-                                        <option>Selecione...</option>
+                                    <select className="w-full border border-gray-300 rounded-md p-2" name="category_id" required>
+                                        <option value="">Selecione...</option>
                                         {category.map((categories) => (
                                             <option key={categories.id} value={categories.id}>{categories.name}</option>
                                         ))}
@@ -119,18 +197,18 @@ export default function NovoProduto({ setShowNovoProdutoModal }: { setShowNovoPr
                                 </div>
                                 <div>
                                     <label className="block mb-1 font-medium">Valor (R$)</label>
-                                    <input type="number" className="w-full border border-gray-300 rounded-md p-2" placeholder="R$ 0,00" />
+                                    <input type="number" name="price" className="w-full border border-gray-300 rounded-md p-2" placeholder="R$ 0,00" required />
                                 </div>
                             </div>
 
                             <div>
                                 <label className="block mb-1 font-medium">Breve Descrição <span className="text-gray-500 font-normal">(Exibida nos cards)</span></label>
-                                <textarea className="w-full border border-gray-300 rounded-md p-2" placeholder="Resumo curto do produto." />
+                                <textarea className="w-full border border-gray-300 rounded-md p-2" name="brief_description" placeholder="Resumo curto do produto." required />
                             </div>
 
                             <div>
                                 <label className="block mb-1 font-medium">Descrição Completa</label>
-                                <textarea className="w-full border border-gray-300 rounded-md p-2" placeholder="Detalhes técnicos, materiais, dimensões e características do produto." rows={5} />
+                                <textarea className="w-full border border-gray-300 rounded-md p-2" name="detailed_description" placeholder="Detalhes técnicos, materiais, dimensões e características do produto." rows={5} required />
                             </div>
                         </div>
 
@@ -139,7 +217,7 @@ export default function NovoProduto({ setShowNovoProdutoModal }: { setShowNovoPr
                                 <label className="block mb-2 font-medium">
                                     Imagens do Produto
                                 </label>
-                                
+
                                 {/* Hidden file input */}
                                 <input
                                     ref={fileInputRef}
@@ -151,7 +229,7 @@ export default function NovoProduto({ setShowNovoProdutoModal }: { setShowNovoPr
                                 />
 
                                 {/* Upload Area */}
-                                <div 
+                                <div
                                     onClick={handleUploadClick}
                                     className={`border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:border-[var(--primary)] transition-colors ${selectedImages.length >= 3 ? 'opacity-50 cursor-not-allowed' : ''}`}
                                 >
@@ -164,8 +242,8 @@ export default function NovoProduto({ setShowNovoProdutoModal }: { setShowNovoPr
                                 {/* Image Slots */}
                                 <div className="mt-4 space-y-2">
                                     {[0, 1, 2].map((index) => (
-                                        <div 
-                                            key={index} 
+                                        <div
+                                            key={index}
                                             className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200"
                                         >
                                             {previewImage[index] ? (
@@ -208,7 +286,9 @@ export default function NovoProduto({ setShowNovoProdutoModal }: { setShowNovoPr
                     </div>
 
                     <div className="border-t border-gray-200 mt-4 pt-4 flex justify-end">
-                        <button type="submit" className="bg-[var(--primary)] text-white px-4 py-2 rounded-md hover:opacity-90 transition-opacity flex items-center gap-1 cursor-pointer">Adicionar Produto</button>
+                        <button type="submit" disabled={uploading} className="bg-[var(--primary)] text-white px-4 py-2 rounded-md hover:opacity-90 transition-opacity flex items-center gap-1 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">
+                            {uploading ? 'Adicionando...' : 'Adicionar Produto'}
+                        </button>
                     </div>
                 </form>
             </div >
