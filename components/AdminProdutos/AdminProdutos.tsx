@@ -2,46 +2,66 @@ import { FiSearch } from 'react-icons/fi';
 import { MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import { supabase } from '@/lib/supabase-client';
 
-const produtos = [
-    {
-        foto: "/image/cadeira.jpg",
-        categoria: "Cadeiras",
-        nome: "Cadeira de Escritório",
-        descricao: "tubos metálicos de aço com acabamento em pintura preta brilhante",
-        preco: 299.99
-    },
-    {
-        foto: "/image/armario_grande.png",
-        categoria: "Armários",
-        nome: "Armário Grande",
-        descricao: "armário espaçoso com acabamento em madeira de alta qualidade",
-        preco: 499.99
-    },
-    {
-        foto: "/image/gaveteira.png",
-        categoria: "Armários",
-        nome: "Gaveteira",
-        descricao: "gaveteira prática com várias gavetas para organização",
-        preco: 299.99
-    },
-    {
-        foto: "/image/cadeira_escolar.png",
-        categoria: "Cadeiras",
-        nome: "Cadeira Escolar",
-        descricao: "cadeira escolar resistente com assento e encosto ergonômicos",
-        preco: 199.99
-    },
-    {
-        foto: "/image/tableoffice.jpg",
-        categoria: "Mesas",
-        nome: "Mesa de Escritório",
-        descricao: "mesa de escritório espaçosa com acabamento em madeira de alta qualidade",
-        preco: 399.99
-    }
-]
+interface Category {
+    id: string;
+    name: string;
+    color: string;
+}
+
+interface Products {
+    name: string;
+    photos: string[];
+    category_id: string;
+    categories: Category;
+    brief_description: string;
+    detailed_description: string;
+    price: number;
+}
 
 export default function AdminProdutos() {
+    const [products, setProducts] = useState<Products[]>([])
+    const [erros, setErros] = useState<string | null>(null)
+
+    const fetchProducts = async () => {
+        const { data, error } = await supabase
+            .from('products')
+            .select('*, categories(id, name, color)')
+
+        if (error) {
+            setErros('Erro ao buscar produtos')
+            return
+        }
+
+        return data
+    }
+
+    useEffect(() => {
+        const loadProducts = async () => {
+            const products = await fetchProducts()
+            setProducts(products || [])
+        }
+        loadProducts()
+
+        // Listen for real-time updates
+        const channel = supabase
+            .channel('products-changes')
+            .on(
+                'postgres_changes',
+                { event: '*', schema: 'public', table: 'products' },
+                () => {
+                    loadProducts()
+                }
+            )
+            .subscribe()
+
+        return () => {
+            supabase.removeChannel(channel)
+        }
+    }, [])
+
     return (
         <div className="bg-gray-100 rounded-[20px] my-12">
             <div className="flex flex-col md:flex-row md:justify-between items-center px-4 py-3">
@@ -57,7 +77,7 @@ export default function AdminProdutos() {
                 </div>
 
                 <div className="">
-                    <p>Total: {produtos.length} produtos</p>
+                    <p>Total: {products.length} produtos</p>
                 </div>
             </div>
             <div className="overflow-x-auto">
@@ -68,31 +88,34 @@ export default function AdminProdutos() {
                         <h4 className='font-semibold text-center'>PREÇO</h4>
                         <h4 className='font-semibold text-center'>AÇÕES</h4>
                     </div>
-                    {produtos.map((produto, index) => (
+
+                    {erros && <p className="text-sm mt-1" style={{ color: "red" }}>{erros}</p>}
+
+                    {products.map((product, index) => (
                         <div key={index} className="grid grid-cols-5 items-center px-4 py-3 border-b border-gray-200 bg-white">
                             <div className='col-span-2 flex items-center gap-4'>
                                 <div className="relative w-16 h-16 flex-shrink-0">
                                     <Image
-                                        src={produto.foto}
-                                        alt={produto.nome}
+                                        src={product.photos[0]}
+                                        alt={product.name}
                                         fill
                                         className="rounded-lg object-cover"
                                     />
                                 </div>
                                 <div className='pr-20'>
-                                    <h4 className="font-semibold text-lg line-clamp-1">{produto.nome}</h4>
-                                    <p className="line-clamp-1">{produto.descricao}</p>
+                                    <h4 className="font-semibold text-lg line-clamp-1">{product.name}</h4>
+                                    <p className="line-clamp-1">{product.brief_description}</p>
                                 </div>
                             </div>
                             <div>
-                                <p className={`text-center text-sm font-semibold ${produto.categoria}-tag rounded-full py-1 w-fit mx-auto px-3`}>{produto.categoria}</p>
+                                <p className={`text-center text-sm font-semibold rounded-full py-1 w-fit mx-auto px-3`} style={{ backgroundColor: product.categories?.color + '20', color: product.categories?.color }}>{product.categories.name}</p>
                             </div>
                             <div>
-                                <p className="font-semibold text-center">R$ {produto.preco.toFixed(2)}</p>
+                                <p className="font-semibold text-center">R$ {product.price.toFixed(2)}</p>
                             </div>
                             <div className="flex items-center gap-4 justify-center">
-                                <button className="text-blue-500 hover:cursor-pointer"><MdOutlineEdit  color='blue' size={24}/></button>
-                                <button className="text-red-500 hover:cursor-pointer"><RiDeleteBin6Line color='red' size={24}/></button>
+                                <button className="text-blue-500 hover:cursor-pointer"><MdOutlineEdit color='blue' size={24} /></button>
+                                <button className="text-red-500 hover:cursor-pointer"><RiDeleteBin6Line color='red' size={24} /></button>
                             </div>
                         </div>
                     ))}
