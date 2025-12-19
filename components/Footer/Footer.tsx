@@ -44,8 +44,8 @@ export default function Footer() {
                 <div className="space-y-1 overflow-hidden">
                     <h3>Contato</h3>
                     <p className="flex items-center gap-2"><FaHome className="lg:hidden" /> Av Alberto Miguel,859 St Campinas, Goiania - GO</p>
-                    <p className="flex items-center gap-2"><FaPhoneAlt className="lg:hidden" /> (62) 3215-0996</p>
-                    <p className="flex items-center text-sm sm:text-base gap-2 wrap-anywhere"> <MdEmail className="lg:hidden" /> leonardo.alternativamoveis@gmail.com</p>
+                    <p className="flex items-center gap-2"><FaPhoneAlt className="lg:hidden" /> <a href="tel:+556232150996">(62) 3215-0996</a></p>
+                    <p className="flex items-center text-sm sm:text-base gap-2 wrap-anywhere"> <MdEmail className="lg:hidden" /> <a href="mailto:leonardo.alternativamoveis@gmail.com">leonardo.alternativamoveis@gmail.com</a></p>
                 </div>
                 <div className="space-y-1">
                     <h3>Siga-nos</h3>
