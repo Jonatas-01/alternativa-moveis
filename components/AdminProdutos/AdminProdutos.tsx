@@ -24,6 +24,7 @@ interface Products {
 export default function AdminProdutos() {
     const [products, setProducts] = useState<Products[]>([])
     const [erros, setErros] = useState<string | null>(null)
+    const [searchQuery, setSearchQuery] = useState('')
 
     const fetchProducts = async () => {
         const { data, error } = await supabase
@@ -62,6 +63,13 @@ export default function AdminProdutos() {
         }
     }, [])
 
+    // Filter products based on search query
+    const filteredProducts = products.filter(product => 
+        product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        product.brief_description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        product.categories?.name.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+
     return (
         <div className="bg-gray-100 rounded-[20px] my-12">
             <div className="flex flex-col md:flex-row md:justify-between items-center px-4 py-3">
@@ -71,13 +79,15 @@ export default function AdminProdutos() {
                         <input
                             type="text"
                             placeholder="Buscar produtos..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
                             className="ml-2 flex-1 outline-none text-gray-700"
                         />
                     </div>
                 </div>
 
-                <div className="">
-                    <p>Total: {products.length} produtos</p>
+                <div>
+                    <p>Total: {filteredProducts.length} produtos</p>
                 </div>
             </div>
             <div className="overflow-x-auto">
@@ -91,7 +101,13 @@ export default function AdminProdutos() {
 
                     {erros && <p className="text-sm mt-1" style={{ color: "red" }}>{erros}</p>}
 
-                    {products.map((product, index) => (
+                    {filteredProducts.length === 0 && !erros && (
+                        <div className="text-center py-8 text-gray-500">
+                            {searchQuery ? 'Nenhum produto encontrado.' : 'Nenhum produto cadastrado.'}
+                        </div>
+                    )}
+
+                    {filteredProducts.map((product, index) => (
                         <div key={index} className="grid grid-cols-5 items-center px-4 py-3 border-b border-gray-200 bg-white">
                             <div className='col-span-2 flex items-center gap-4'>
                                 <div className="relative w-16 h-16 flex-shrink-0">
@@ -119,6 +135,9 @@ export default function AdminProdutos() {
                             </div>
                         </div>
                     ))}
+                </div>
+                {/* Pagination */}
+                <div className="flex justify-end items-center px-4 py-3">
                 </div>
             </div>
         </div>
