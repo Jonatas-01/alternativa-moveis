@@ -4,6 +4,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase-client';
+import DeleteProdutoModal from './DeleteProdutoModal';
 
 interface Category {
     id: string;
@@ -12,6 +13,7 @@ interface Category {
 }
 
 interface Products {
+    id: string;
     name: string;
     photos: string[];
     category_id: string;
@@ -25,6 +27,7 @@ export default function AdminProdutos() {
     const [products, setProducts] = useState<Products[]>([])
     const [erros, setErros] = useState<string | null>(null)
     const [searchQuery, setSearchQuery] = useState('')
+    const [showDeleteModal, setShowDeleteModal] = useState(false)
 
     const fetchProducts = async () => {
         const { data, error } = await supabase
@@ -131,9 +134,14 @@ export default function AdminProdutos() {
                             </div>
                             <div className="flex items-center gap-4 justify-center">
                                 <button className="text-blue-500 hover:cursor-pointer"><MdOutlineEdit color='blue' size={24} /></button>
-                                <button className="text-red-500 hover:cursor-pointer"><RiDeleteBin6Line color='red' size={24} /></button>
+                                <button onClick={() => setShowDeleteModal(true)} className="text-red-500 hover:cursor-pointer"><RiDeleteBin6Line color='red' size={24} /></button>
                             </div>
+
+                            {showDeleteModal && (
+                                <DeleteProdutoModal setShowDeleteProdutoModal={setShowDeleteModal} product={product} />
+                            )}
                         </div>
+
                     ))}
                 </div>
                 {/* Pagination */}
