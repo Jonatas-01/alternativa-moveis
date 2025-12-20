@@ -191,7 +191,7 @@ export default function RegisterPage() {
                 <div className="mt-6 pt-6 border-t border-gray-200">
                     <p className="text-center text-sm text-[var(--paragraph)]">
                         Já possui uma conta?{' '}
-                        <a href="/login" className="text-[var(--secondary)] hover:underline font-medium">
+                        <a href="/auth/login" className="text-[var(--secondary)] hover:underline font-medium">
                             Faça Login
                         </a>
                     </p>

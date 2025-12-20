@@ -40,6 +40,13 @@ const produtos = [
         preco: 299.99
     },
     {
+        foto: "/image/cadeira.jpg",
+        categoria: "Cadeiras",
+        nome: "Cadeira de Escritório",
+        descricao: "tubos metálicos de aço com acabamento em pintura preta brilhante",
+        preco: 299.99
+    },
+    {
         foto: "/image/cadeira_escolar.png",
         categoria: "Cadeiras",
         nome: "Cadeira Escolar",
