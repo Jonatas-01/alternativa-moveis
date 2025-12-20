@@ -45,7 +45,7 @@ export default function DeleteProdutoModal({ setShowDeleteProdutoModal, product 
     }
 
     return (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-black/20 flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-lg w-full max-w-lg shadow-xl max-h-[90vh] flex flex-col">
                 <div className="p-6 flex-grow overflow-y-auto">
                     <h2 className="text-2xl font-semibold mb-4">Excluir Produto</h2>

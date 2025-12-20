@@ -179,7 +179,6 @@ export default function NovoProduto({ setShowNovoProdutoModal }: { setShowNovoPr
                 <form className="overflow-y-auto flex-1 p-6 pt-4" onSubmit={handleSubmit}>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div className="col-span-1 md:col-span-2 space-y-4">
-
                             <div>
                                 <label className="block mb-1 font-medium">Nome do Produto</label>
                                 <input type="text" name="name" className="w-full border border-gray-300 rounded-md p-2" placeholder="Ex: Cadeira de Escritório Ergonomica" required />

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase-client';
 import DeleteProdutoModal from './DeleteProdutoModal';
+import EditProdutoModal from './EditProdutoModal';
 
 interface Category {
     id: string;
@@ -27,7 +28,8 @@ export default function AdminProdutos() {
     const [products, setProducts] = useState<Products[]>([])
     const [erros, setErros] = useState<string | null>(null)
     const [searchQuery, setSearchQuery] = useState('')
-    const [showDeleteModal, setShowDeleteModal] = useState(false)
+    const [productToDelete, setProductToDelete] = useState<Products | null>(null)
+    const [productToEdit, setProductToEdit] = useState<Products | null>(null)
 
     const fetchProducts = async () => {
         const { data, error } = await supabase
@@ -67,7 +69,7 @@ export default function AdminProdutos() {
     }, [])
 
     // Filter products based on search query
-    const filteredProducts = products.filter(product => 
+    const filteredProducts = products.filter(product =>
         product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         product.brief_description.toLowerCase().includes(searchQuery.toLowerCase()) ||
         product.categories?.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -133,17 +135,22 @@ export default function AdminProdutos() {
                                 <p className="font-semibold text-center">R$ {product.price.toFixed(2)}</p>
                             </div>
                             <div className="flex items-center gap-4 justify-center">
-                                <button className="text-blue-500 hover:cursor-pointer"><MdOutlineEdit color='blue' size={24} /></button>
-                                <button onClick={() => setShowDeleteModal(true)} className="text-red-500 hover:cursor-pointer"><RiDeleteBin6Line color='red' size={24} /></button>
+                                <button onClick={() => setProductToEdit(product)} className="text-blue-500 hover:cursor-pointer"><MdOutlineEdit color='blue' size={24} /></button>
+                                <button onClick={() => setProductToDelete(product)} className="text-red-500 hover:cursor-pointer"><RiDeleteBin6Line color='red' size={24} /></button>
                             </div>
-
-                            {showDeleteModal && (
-                                <DeleteProdutoModal setShowDeleteProdutoModal={setShowDeleteModal} product={product} />
-                            )}
                         </div>
 
                     ))}
                 </div>
+
+                {productToEdit && (
+                    <EditProdutoModal setShowEditProdutoModal={() => setProductToEdit(null)} product={productToEdit} />
+                )}
+
+                {productToDelete && (
+                    <DeleteProdutoModal setShowDeleteProdutoModal={() => setProductToDelete(null)} product={productToDelete} />
+                )}
+
                 {/* Pagination */}
                 <div className="flex justify-end items-center px-4 py-3">
                 </div>
