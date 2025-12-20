@@ -123,6 +123,10 @@ export default function EditProdutoModal({
         setUpdating(true)
         setErros(null)
 
+        // Capture form reference before any async operation
+        const form = e.currentTarget
+        const formData = new FormData(form)
+
         // Security: Verify authentication before proceeding
         const { data: { session } } = await supabase.auth.getSession()
         if (!session) {
@@ -130,8 +134,6 @@ export default function EditProdutoModal({
             setUpdating(false)
             return
         }
-
-        const formData = new FormData(e.currentTarget)
         
         // Sanitize inputs - trim whitespace
         const name = (formData.get('name') as string)?.trim()
@@ -201,7 +203,7 @@ export default function EditProdutoModal({
                 }
 
                 const uploadData = await uploadResponse.json()
-                uploadedUrls = uploadData.urls
+                uploadedUrls = uploadData.images.map((img: { url: string }) => img.url)
             }
 
             // Delete removed photos from Cloudinary

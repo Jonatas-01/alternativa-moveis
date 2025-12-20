@@ -19,6 +19,7 @@ export default function NovoProduto({ setShowNovoProdutoModal }: { setShowNovoPr
     const fileInputRef = useRef<HTMLInputElement>(null)
     const [erros, setErros] = useState<string | null>(null)
     const [uploading, setUploading] = useState(false)
+    const [isAuthenticated, setIsAuthenticated] = useState(false)
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = Array.from(e.target.files || [])
@@ -72,17 +73,54 @@ export default function NovoProduto({ setShowNovoProdutoModal }: { setShowNovoPr
         e.preventDefault()
         setErros(null)
 
-        const form = e.currentTarget;
+        // Capture form reference before any async operation
+        const form = e.currentTarget
         const formData = new FormData(form)
+
+        // Security: Verify authentication before proceeding
+        const { data: { session } } = await supabase.auth.getSession()
+        if (!session) {
+            setErros('Sessão expirada. Faça login novamente.')
+            return
+        }
+
+        // Sanitize inputs - trim whitespace
+        const name = (formData.get('name') as string)?.trim()
+        const category_id = (formData.get('category_id') as string)?.trim()
+        const brief_description = (formData.get('brief_description') as string)?.trim()
+        const detailed_description = (formData.get('detailed_description') as string)?.trim()
+        const priceValue = (formData.get('price') as string)?.trim()
+
+        // Validate required fields
+        if (!name || !category_id || !brief_description || !detailed_description || !priceValue) {
+            setErros('Preencha todos os campos obrigatórios.')
+            return
+        }
 
         if (selectedImages.length === 0) {
             setErros("Por favor, envie pelo menos uma imagem do produto.")
             return
         }
 
-        const priceValue = parseFloat(formData.get('price') as string)
-        if (isNaN(priceValue) || priceValue < 0) {
-            setErros("Por favor, insira um valor válido para o preço.")
+        const price = parseFloat(priceValue)
+        if (isNaN(price) || price < 0) {
+            setErros("O preço deve ser um número válido e positivo.")
+            return
+        }
+
+        // Validate field lengths
+        if (name.length > 200) {
+            setErros('O nome do produto não pode ter mais de 200 caracteres.')
+            return
+        }
+
+        if (brief_description.length > 500) {
+            setErros('A breve descrição não pode ter mais de 500 caracteres.')
+            return
+        }
+
+        if (detailed_description.length > 5000) {
+            setErros('A descrição completa não pode ter mais de 5000 caracteres.')
             return
         }
 
@@ -111,11 +149,11 @@ export default function NovoProduto({ setShowNovoProdutoModal }: { setShowNovoPr
             const photoUrls = uploadData.images.map((img: { url: string }) => img.url)
 
             const productData = {
-                name: formData.get('name'),
-                category_id: formData.get('category_id'),
-                price: priceValue,
-                brief_description: formData.get('brief_description'),
-                detailed_description: formData.get('detailed_description'),
+                name,
+                category_id,
+                price,
+                brief_description,
+                detailed_description,
                 photos: photoUrls
             }
 
@@ -163,6 +201,20 @@ export default function NovoProduto({ setShowNovoProdutoModal }: { setShowNovoPr
             setCategories(categories)
         }
         loadCategories()
+
+        // Check authentication status
+        const checkAuth = async () => {
+            const { data: { session } } = await supabase.auth.getSession()
+            setIsAuthenticated(!!session)
+        }
+        checkAuth()
+
+        // Listen for auth changes
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+            setIsAuthenticated(!!session)
+        })
+
+        return () => subscription.unsubscribe()
     }, [])
 
     return (
@@ -285,7 +337,12 @@ export default function NovoProduto({ setShowNovoProdutoModal }: { setShowNovoPr
                     </div>
 
                     <div className="border-t border-gray-200 mt-4 pt-4 flex justify-end">
-                        <button type="submit" disabled={uploading} className="bg-[var(--primary)] text-white px-4 py-2 rounded-md hover:opacity-90 transition-opacity flex items-center gap-1 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">
+                        <button 
+                            type="submit" 
+                            disabled={uploading || !isAuthenticated} 
+                            className="bg-[var(--primary)] text-white px-4 py-2 rounded-md hover:opacity-90 transition-opacity flex items-center gap-1 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                            title={!isAuthenticated ? 'Você precisa estar logado para adicionar produtos' : undefined}
+                        >
                             {uploading ? 'Adicionando...' : 'Adicionar Produto'}
                         </button>
                     </div>
