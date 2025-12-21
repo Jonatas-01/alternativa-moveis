@@ -24,12 +24,15 @@ interface Products {
     price: number;
 }
 
+const PRODUCTS_PER_PAGE = 6
+
 export default function AdminProdutos() {
     const [products, setProducts] = useState<Products[]>([])
     const [erros, setErros] = useState<string | null>(null)
     const [searchQuery, setSearchQuery] = useState('')
     const [productToDelete, setProductToDelete] = useState<Products | null>(null)
     const [productToEdit, setProductToEdit] = useState<Products | null>(null)
+    const [currentPage, setCurrentPage] = useState(1)
 
     const fetchProducts = async () => {
         const { data, error } = await supabase
@@ -75,6 +78,17 @@ export default function AdminProdutos() {
         product.categories?.name.toLowerCase().includes(searchQuery.toLowerCase())
     )
 
+    // Pagination calculations
+    const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE)
+    const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE
+    const endIndex = startIndex + PRODUCTS_PER_PAGE
+    const paginatedProducts = filteredProducts.slice(startIndex, endIndex)
+
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchQuery(e.target.value)
+        setCurrentPage(1)
+    }
+
     return (
         <div className="bg-gray-100 rounded-[20px] my-12">
             <div className="flex flex-col md:flex-row md:justify-between items-center px-4 py-3">
@@ -85,7 +99,7 @@ export default function AdminProdutos() {
                             type="text"
                             placeholder="Buscar produtos..."
                             value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
+                            onChange={handleSearchChange}
                             className="ml-2 flex-1 outline-none text-gray-700"
                         />
                     </div>
@@ -112,7 +126,7 @@ export default function AdminProdutos() {
                         </div>
                     )}
 
-                    {filteredProducts.map((product, index) => (
+                    {paginatedProducts.map((product, index) => (
                         <div key={index} className="grid grid-cols-5 items-center px-4 py-3 border-b border-gray-200 bg-white">
                             <div className='col-span-2 flex items-center gap-4'>
                                 <div className="relative w-16 h-16 flex-shrink-0">
@@ -152,7 +166,43 @@ export default function AdminProdutos() {
                 )}
 
                 {/* Pagination */}
-                <div className="flex justify-end items-center px-4 py-3">
+                <div className="flex justify-between items-center px-4 py-7">
+                    <p className="text-sm text-gray-600">
+                        Mostrando {filteredProducts.length > 0 ? startIndex + 1 : 0}-{Math.min(endIndex, filteredProducts.length)} de {filteredProducts.length} produtos
+                    </p>
+                    {totalPages > 1 && (
+                        <div className="flex items-center gap-2">
+                            <button
+                                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                                disabled={currentPage === 1}
+                                className="px-3 py-1 rounded-lg border border-gray-300 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                Anterior
+                            </button>
+                            
+                            {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                                <button
+                                    key={page}
+                                    onClick={() => setCurrentPage(page)}
+                                    className={`px-3 py-1 rounded-lg border ${
+                                        currentPage === page
+                                            ? 'bg-[var(--primary)] text-white border-blue-500'
+                                            : 'bg-white border-gray-300 hover:bg-gray-50'
+                                    }`}
+                                >
+                                    {page}
+                                </button>
+                            ))}
+                            
+                            <button
+                                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                                disabled={currentPage === totalPages}
+                                className="px-3 py-1 rounded-lg border border-gray-300 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                Próximo
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
