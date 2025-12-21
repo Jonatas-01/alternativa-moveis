@@ -19,11 +19,10 @@ export async function POST(request: NextRequest) {
         }
 
         // Extract public_ids from Cloudinary URLs
-        // URL format: https://res.cloudinary.com/{cloud_name}/image/upload/v{version}/{folder}/{public_id}.{ext}
         const publicIds = imageUrls.map((url: string) => {
             const parts = url.split('/');
-            const folderAndFile = parts.slice(-2).join('/'); // e.g., "furniture-shop/filename"
-            const publicId = folderAndFile.replace(/\.[^/.]+$/, ''); // Remove extension
+            const folderAndFile = parts.slice(-2).join('/');
+            const publicId = folderAndFile.replace(/\.[^/.]+$/, '');
             return publicId;
         });
 

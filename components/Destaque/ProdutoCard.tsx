@@ -18,7 +18,7 @@ export default function ProdutoCard({ foto, categoria, nome, descricao, preco }:
                 <p className="font-medium ">{categoria}</p>
                 <h4 className="font-semibold text-lg">{nome}</h4>
                 <p className="">{descricao}</p>
-                <h4 className="font-semibold text-lg">R$ {preco}</h4>
+                <h4 className="font-semibold text-lg">R$ {preco.toFixed(2)}</h4>
             </div>
         </div>
     )
