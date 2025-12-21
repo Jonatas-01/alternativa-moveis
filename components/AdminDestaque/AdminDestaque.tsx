@@ -196,10 +196,10 @@ export default function AdminDestaque() {
                         <button
                             type="button"
                             onClick={() => handleRemoveFeatured(produto.id)}
-                            className="absolute top-2 right-2 bg-red-500 text-white p-1.5 rounded-full z-10 cursor-pointer hover:bg-red-600 transition-colors"
+                            className="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full z-10 cursor-pointer hover:bg-red-600 transition-colors"
                             title="Remover do destaque"
                         >
-                            <RiDeleteBin6Line size={14} />
+                            <RiDeleteBin6Line size={22} />
                         </button>
                         <div className="relative w-full h-32 flex-shrink-0">
                             <Image

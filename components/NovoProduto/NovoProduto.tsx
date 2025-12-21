@@ -162,6 +162,18 @@ export default function NovoProduto({ setShowNovoProdutoModal }: { setShowNovoPr
 
             if (error) {
                 console.error("Erro Supabase:", error)
+                
+                // Rollback: Delete uploaded images from Cloudinary
+                try {
+                    await fetch('/api/delete', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ imageUrls: photoUrls })
+                    })
+                } catch (deleteError) {
+                    console.error("Erro ao deletar imagens após falha:", deleteError)
+                }
+                
                 setErros("Erro ao adicionar produto ao banco de dados. Tente novamente.")
                 return
             }
