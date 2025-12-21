@@ -35,44 +35,6 @@ interface Product {
     is_featured: boolean;
 }
 
-const produtos = [
-    // {
-    //     foto: "/image/cadeira.jpg",
-    //     categoria: "Cadeiras",
-    //     nome: "Cadeira de Escritório",
-    //     descricao: "tubos metálicos de aço com acabamento em pintura preta brilhante",
-    //     preco: 299.99
-    // },
-    // {
-    //     foto: "/image/armario_grande.png",
-    //     categoria: "Armários",
-    //     nome: "Armário Grande",
-    //     descricao: "armário espaçoso com acabamento em madeira de alta qualidade",
-    //     preco: 499.99
-    // },
-    // {
-    //     foto: "/image/gaveteira.png",
-    //     categoria: "Armários",
-    //     nome: "Gaveteira",
-    //     descricao: "gaveteira prática com várias gavetas para organização",
-    //     preco: 299.99
-    // },
-    // {
-    //     foto: "/image/cadeira.jpg",
-    //     categoria: "Cadeiras",
-    //     nome: "Cadeira de Escritório",
-    //     descricao: "tubos metálicos de aço com acabamento em pintura preta brilhante",
-    //     preco: 299.99
-    // },
-    // {
-    //     foto: "/image/cadeira_escolar.png",
-    //     categoria: "Cadeiras",
-    //     nome: "Cadeira Escolar",
-    //     descricao: "cadeira escolar resistente com assento e encosto ergonômicos",
-    //     preco: 199.99
-    // }
-]
-
 const EmblaCarousel: React.FC<PropType> = (props) => {
     const { options } = props
     const [emblaRef, emblaApi] = useEmblaCarousel(options, [Autoplay()])
