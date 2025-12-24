@@ -6,6 +6,7 @@ import { supabase } from '@/lib/supabase-client'
 import Image from 'next/image'
 import { FiSearch } from 'react-icons/fi'
 import { IoChevronBack, IoChevronForward } from 'react-icons/io5'
+import Link from 'next/link'
 
 interface Category {
     id: string
@@ -168,7 +169,8 @@ export default function Catalogo() {
                 {!loading && filteredProducts.length > 0 && (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                         {paginatedProducts.map(product => (
-                            <div 
+                            <Link
+                                href={`/catalogo/${product.id}`}
                                 key={product.id} 
                                 className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300"
                             >
@@ -197,7 +199,7 @@ export default function Catalogo() {
                                         R$ {product.price.toFixed(2)}
                                     </h4>
                                 </div>
-                            </div>
+                            </Link>
                         ))}
                     </div>
                 )}

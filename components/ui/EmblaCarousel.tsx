@@ -12,6 +12,7 @@ import Autoplay from 'embla-carousel-autoplay'
 import useEmblaCarousel from 'embla-carousel-react'
 import ProdutoCard from '../Destaque/ProdutoCard'
 import { supabase } from '@/lib/supabase-client'
+import Link from 'next/link'
 
 type PropType = {
     slides: number[]
@@ -69,7 +70,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
             .from('products')
             .select('*, categories(id, name, color)')
             .eq('is_featured', true)
-        
+
         if (error) {
             console.error('Erro ao buscar produtos em destaque:', error.message)
             return []
@@ -93,13 +94,15 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                 <div className="embla__container">
                     {featuredProducts.map((produto, index) => (
                         <div className="embla__slide" key={index}>
-                            <ProdutoCard
-                                foto={produto.photos[0]}
-                                categoria={produto.categories.name}
-                                nome={produto.name}
-                                descricao={produto.brief_description}
-                                preco={produto.price}
-                            />
+                            <Link href={`/catalogo/${produto.id}`}>
+                                <ProdutoCard
+                                    foto={produto.photos[0]}
+                                    categoria={produto.categories.name}
+                                    nome={produto.name}
+                                    descricao={produto.brief_description}
+                                    preco={produto.price}
+                                />
+                            </Link>
                         </div>
                     ))}
                 </div>
