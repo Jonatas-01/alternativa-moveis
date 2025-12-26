@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import { Syne } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/LandingPage/Header/Header";
+import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 
 const montserrat = Montserrat({
