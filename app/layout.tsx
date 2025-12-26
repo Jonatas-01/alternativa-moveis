@@ -18,7 +18,7 @@ const syne = Syne({
 });
 
 export const metadata: Metadata = {
-  // metadataBase: new URL('https://alternativamoveis.com.br'),
+  // metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://alternativamoveis.com.br'),
   title: {
     default: "Alternativa Móveis | Móveis para Escritório e Escolas em Goiânia",
     template: "%s | Alternativa Móveis"
