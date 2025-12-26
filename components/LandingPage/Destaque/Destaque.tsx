@@ -1,10 +1,11 @@
 'use client'
 
 import { BsArrowRight } from "react-icons/bs";
-import EmblaCarousel from "../ui/EmblaCarousel"
+import EmblaCarousel from "@/components/ui/EmblaCarousel"
 import { EmblaOptionsType } from 'embla-carousel'
 import { supabase } from '@/lib/supabase-client'
 import React, { useState } from 'react'
+import Link from "next/link";
 
 const OPTIONS: EmblaOptionsType = { dragFree: true, loop: true }
 const SLIDE_COUNT = 4
@@ -53,7 +54,7 @@ export default function Destaque() {
                 </>
             )}
             <div className="flex justify-center mt-5">
-                <a href="/catalogo" className="flex items-center botoes gap-3">Ver Catálogo <BsArrowRight /></a>
+                <Link href="/catalogo" className="flex items-center botoes gap-3">Ver Catálogo <BsArrowRight /></Link>
             </div>
         </div>
     )

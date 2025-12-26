@@ -1,8 +1,8 @@
-import Hero from '@/components/Hero/Hero';
-import Servicos from '@/components/Servicos/Servicos';
-import Destaque from '@/components/Destaque/Destaque';
-import SobreNos from '@/components/SobreNos/SobreNos';
-import Chamada from '@/components/Chamada/Chamada';
+import Hero from '@/components/LandingPage/Hero/Hero';
+import Servicos from '@/components/LandingPage/Servicos/Servicos';
+import Destaque from '@/components/LandingPage/Destaque/Destaque';
+import SobreNos from '@/components/LandingPage/SobreNos/SobreNos';
+import Chamada from '@/components/LandingPage/Chamada/Chamada';
 import SuccessAlert from '@/components/ui/SuccessAlert';
 
 export default function Home() {

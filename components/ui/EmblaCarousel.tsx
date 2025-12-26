@@ -10,7 +10,7 @@ import {
 } from './EmblaCarouselArrowButtons'
 import Autoplay from 'embla-carousel-autoplay'
 import useEmblaCarousel from 'embla-carousel-react'
-import ProdutoCard from '../Destaque/ProdutoCard'
+import ProdutoCard from '@/components/LandingPage/Destaque/ProdutoCard'
 import { supabase } from '@/lib/supabase-client'
 import Link from 'next/link'
 

@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { IoMdAdd } from "react-icons/io";
 import { MdCategory } from "react-icons/md";
-import AdminDestaque from "@/components/AdminDestaque/AdminDestaque";
-import AdminProdutos from "@/components/AdminProdutos/AdminProdutos";
+import AdminDestaque from "@/components/Dashboard/AdminDestaque/AdminDestaque";
+import AdminProdutos from "@/components/Dashboard/AdminProdutos/AdminProdutos";
 import { supabase } from "@/lib/supabase-client";
 import LogoutModal from "@/components/Auth/LogoutModal";
-import NovoProduto from "@/components/NovoProduto/NovoProduto";
-import CategoriaModal from "@/components/CategoriaModal/CategoriaModal";
+import NovoProduto from "@/components/Dashboard/NovoProduto/NovoProduto";
+import CategoriaModal from "@/components/Dashboard/CategoriaModal/CategoriaModal";
 
 export default function Dashboard() {
     const router = useRouter()
