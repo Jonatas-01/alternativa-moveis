@@ -7,7 +7,7 @@ export default function NossaMissao() {
             <h2 className="text-xl md:text-2xl text-[var(--secondary)]">Nossa Missão</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="mt-4 mr-0 lg:mr-24">
-                    <h4 className="font-semibold text-2xl md:text-4xl">Dedicacao em ajudar voce a achar o melhor produto para seu ambiente</h4>
+                    <h4 className="font-semibold text-2xl md:text-4xl">Dedicação em ajudar você a achar o melhor produto para seu ambiente</h4>
                     <div className="mt-4 md:mt-8 flex justify-between gap-3 sm:gap-6">
                         <div>
                             <h4 className="text-3xl lg:text-4xl font-semibold">10+</h4>
