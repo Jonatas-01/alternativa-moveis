@@ -163,7 +163,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
                         </h4>
 
                         <a
-                            href='https://api.whatsapp.com/send?phone=556232150996&text=Ol%C3%A1%2C%20Estava%20olhando%20seu%20cat%C3%A1logo%20e%20me%20interessei%20por%20um%20produto%20.%20'
+                            href={`https://api.whatsapp.com/send?phone=556232150996&text=Olá! Estava olhando seu catálogo e me interessei pelo produto *${encodeURIComponent(product.name)}*.`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center justify-center gap-3 w-full bg-[#25D366] text-white py-4 rounded-xl font-semibold text-lg hover:bg-[#20BD5A] transition-colors"
