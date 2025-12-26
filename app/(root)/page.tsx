@@ -9,19 +9,27 @@ export default function Home() {
   return (
     <main>
       <SuccessAlert />
-      <Hero />
-      <div className="container mx-auto px-3 md:px-0" id="servicos">
+      <header>
+        <Hero />
+      </header>
+      
+      <section className="container mx-auto px-3 md:px-0" id="servicos" aria-labelledby="servicos-titulo">
         <Servicos />
-      </div>
-      <Destaque />
-      <div className="container mx-auto px-3 md:px-0" id="sobre-nos">
+      </section>
+      
+      <section aria-label="Produtos em Destaque">
+        <Destaque />
+      </section>
+      
+      <section className="container mx-auto px-3 md:px-0" id="sobre-nos" aria-labelledby="sobre-nos-titulo">
         <SobreNos />
-      </div>
-      <div className="bg-[#ebebeb]">
+      </section>
+      
+      <section className="bg-[#ebebeb]" aria-label="Solicitar Orçamento">
         <div className='container mx-auto px-3 md:px-0'>
           <Chamada />
         </div>
-      </div>
+      </section>
     </main>
   );
 }
