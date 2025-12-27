@@ -114,7 +114,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
                             {product.name}
                         </h1>
 
-                        <p className="text-gray-600 mb-1 leading-relaxed">
+                        <p className="text-gray-600 mb-1 font-medium">
                             {product.brief_description}
                         </p>
 
@@ -122,7 +122,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
                             <h2 className="text-xl font-semibold mb-4">
                                 Descrição Completa
                             </h2>
-                            <p className="text-gray-600 whitespace-pre-line leading-relaxed">
+                            <p className="text-gray-600 whitespace-pre-line font-medium">
                                 {product.detailed_description}
                             </p>
                         </div>

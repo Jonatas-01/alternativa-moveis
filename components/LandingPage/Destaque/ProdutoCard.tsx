@@ -12,9 +12,11 @@ export default function ProdutoCard({ foto, categoria, nome, descricao, preco }:
     return (
         <div className="">
             <div className="overflow-hidden">
-                <Image src={foto} alt={nome} width={440} height={440} className="object-cover max-h-[265px] max-w-[265px] sm:max-h-[440px] sm:max-w-[440px]" />
+                <Image src={foto} alt={nome} width={440} height={440}
+                className="object-cover h-[265px] w-[265px] sm:h-[440px] sm:w-[440px]"
+                style={{ objectFit: 'cover', objectPosition: 'center' }}/>
             </div>
-            <div className="p-2 max-h-[265px] max-w-[265px] sm:max-h-[440px] sm:max-w-[440px]">
+            <div className="py-2 max-h-[265px] max-w-[265px] sm:max-h-[440px] sm:max-w-[440px]">
                 <p className="font-medium ">{categoria}</p>
                 <h4 className="font-semibold text-lg">{nome}</h4>
                 <p className="line-clamp-2">{descricao}</p>
