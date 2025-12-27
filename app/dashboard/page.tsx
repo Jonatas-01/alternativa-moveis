@@ -34,7 +34,6 @@ export default function Dashboard() {
 
         checkAuth()
 
-        // Listen for auth changes
         const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
             if (!session) {
                 router.push('/auth/login')

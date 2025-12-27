@@ -123,10 +123,8 @@ export default function AdminDestaque() {
         }
 
         try {
-            // Get current featured IDs
             const newFeaturedIds = featuredProducts.map(p => p.id)
 
-            // First, set all products to is_featured = false
             const { error: resetError } = await supabase
                 .from('products')
                 .update({ is_featured: false })
@@ -136,7 +134,6 @@ export default function AdminDestaque() {
                 throw new Error(resetError.message)
             }
 
-            // Then, set selected products to is_featured = true
             if (newFeaturedIds.length > 0) {
                 const { error: updateError } = await supabase
                     .from('products')
@@ -190,7 +187,6 @@ export default function AdminDestaque() {
             )}
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mt-4">
-                {/* Featured Products */}
                 {featuredProducts.map((produto) => (
                     <div className="servico-card flex flex-col relative group" key={produto.id}>
                         <button

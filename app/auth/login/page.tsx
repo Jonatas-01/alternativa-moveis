@@ -67,14 +67,12 @@ export default function LoginPage() {
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-5">
-                    {/* Error Message */}
                     {error && (
                         <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
                             {error}
                         </div>
                     )}
 
-                    {/* Email Field */}
                     <div>
                         <label className="block text-sm font-medium mb-2">
                             Email
@@ -92,7 +90,6 @@ export default function LoginPage() {
                         </div>
                     </div>
 
-                    {/* Password Field */}
                     <div>
                         <label className="block text-sm font-medium text-[var(--foreground)] mb-2">
                             Senha

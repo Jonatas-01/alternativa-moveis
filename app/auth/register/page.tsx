@@ -82,7 +82,6 @@ export default function RegisterPage() {
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-5">
-                    {/* Email Field */}
                     <div>
                         <label className="block text-sm font-medium mb-2">
                             Email
@@ -100,7 +99,6 @@ export default function RegisterPage() {
                         </div>
                     </div>
 
-                    {/* Password Field */}
                     <div>
                         <label className="block text-sm font-medium mb-2">
                             Criar Senha
@@ -152,7 +150,6 @@ export default function RegisterPage() {
                         )}
                     </div>
 
-                    {/* Confirm Password Field */}
                     <div>
                         <label className="block text-sm font-medium mb-2">
                             Confirmar Senha
