@@ -103,9 +103,9 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
 
                 <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
                     <div className="md:col-span-2">
-                        <ProductImageGallery 
-                            photos={product.photos} 
-                            productName={product.name} 
+                        <ProductImageGallery
+                            photos={product.photos}
+                            productName={product.name}
                         />
                     </div>
 
