@@ -12,7 +12,7 @@ A full-stack furniture catalog website with an admin dashboard, developed for Al
 
 ## Live Site
 
-🔗 **[View Live Site](https://alternativa-moveis.vercel.app/)**
+🔗 **[View Live Site](https://www.alternativamoveis.com.br/)**
 
 ---
 

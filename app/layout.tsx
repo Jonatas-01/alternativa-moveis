@@ -18,7 +18,7 @@ const syne = Syne({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://alternativa-moveis.vercel.app/'),
+  metadataBase: new URL('https://www.alternativamoveis.com.br/'),
   title: {
     default: "Alternativa Móveis | Móveis para Escritório e Escolas em Goiânia",
     template: "%s | Alternativa Móveis"
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'pt_BR',
-    url: 'https://alternativa-moveis.vercel.app/',
+    url: 'https://www.alternativamoveis.com.br/',
     siteName: 'Alternativa Móveis',
     title: 'Alternativa Móveis | Móveis para Escritório e Escolas em Goiânia',
     description: 'Móveis de alta qualidade para escritórios e escolas. Cadeiras, mesas, armários e carteiras escolares. Venda, conserto e entrega em Goiânia.',
@@ -74,7 +74,7 @@ export const metadata: Metadata = {
     images: ['/image/hero-image.jpg'],
   },
   alternates: {
-    canonical: 'https://alternativa-moveis.vercel.app/',
+    canonical: 'https://www.alternativamoveis.com.br/',
   },
   verification: {
     // Add your Google Search Console verification code here
@@ -88,7 +88,7 @@ const jsonLd = {
   '@type': 'FurnitureStore',
   name: 'Alternativa Móveis',
   description: 'Móveis de alta qualidade para escritórios e escolas em Goiânia. Venda, conserto e entrega.',
-  url: 'https://alternativa-moveis.vercel.app/',
+  url: 'https://www.alternativamoveis.com.br/',
   telephone: '+55-62-3215-0996',
   email: 'leonardo.alternativamoveis@gmail.com',
   address: {
