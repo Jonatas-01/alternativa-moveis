@@ -195,9 +195,11 @@ export default function Catalogo() {
                                     <p className="text-gray-500 text-sm mt-1 line-clamp-2">
                                         {product.brief_description}
                                     </p>
-                                    <h4 className="font-bold text-lg mt-3">
-                                        R$ {product.price.toFixed(2)}
-                                    </h4>
+                                    {product.price !== 0 && (
+                                        <h4 className="font-bold text-lg mt-3">
+                                            R$ {product.price.toFixed(2)}
+                                        </h4>
+                                    )}
                                 </div>
                             </Link>
                         ))}

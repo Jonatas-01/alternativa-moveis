@@ -104,7 +104,7 @@ export default function NovoProduto({ setShowNovoProdutoModal }: { setShowNovoPr
 
         const price = parseFloat(priceValue)
         if (isNaN(price) || price < 0) {
-            setErros("O preço deve ser um número válido e positivo.")
+            setErros("O preço deve ser um número válido, positivo ou zero.")
             return
         }
 

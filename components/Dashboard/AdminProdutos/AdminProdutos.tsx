@@ -145,9 +145,15 @@ export default function AdminProdutos() {
                             <div>
                                 <p className={`text-center text-sm font-semibold rounded-full py-1 w-fit mx-auto px-3`} style={{ backgroundColor: product.categories?.color + '20', color: product.categories?.color }}>{product.categories.name}</p>
                             </div>
-                            <div>
-                                <p className="font-semibold text-center">R$ {product.price.toFixed(2)}</p>
-                            </div>
+                            {product.price !== 0 ? (
+                                <div>
+                                    <p className="font-semibold text-center">R$ {product.price !== 0 ? product.price.toFixed(2) : ''}</p>
+                                </div>
+                            ) : (
+                                <div>
+                                    <p className='font-semibold text-center'>-</p>
+                                </div>
+                            )}
                             <div className="flex items-center gap-4 justify-center">
                                 <button onClick={() => setProductToEdit(product)} className="text-blue-500 hover:cursor-pointer"><MdOutlineEdit color='blue' size={24} /></button>
                                 <button onClick={() => setProductToDelete(product)} className="text-red-500 hover:cursor-pointer"><RiDeleteBin6Line color='red' size={24} /></button>
@@ -179,21 +185,20 @@ export default function AdminProdutos() {
                             >
                                 Anterior
                             </button>
-                            
+
                             {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
                                 <button
                                     key={page}
                                     onClick={() => setCurrentPage(page)}
-                                    className={`px-3 py-1 rounded-lg border ${
-                                        currentPage === page
-                                            ? 'bg-[var(--primary)] text-white border-blue-500'
-                                            : 'bg-white border-gray-300 hover:bg-gray-50'
-                                    }`}
+                                    className={`px-3 py-1 rounded-lg border ${currentPage === page
+                                        ? 'bg-[var(--primary)] text-white border-blue-500'
+                                        : 'bg-white border-gray-300 hover:bg-gray-50'
+                                        }`}
                                 >
                                     {page}
                                 </button>
                             ))}
-                            
+
                             <button
                                 onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                                 disabled={currentPage === totalPages}

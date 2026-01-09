@@ -154,9 +154,11 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
                             </div>
                         </div>
 
-                        <h4 className="text-3xl font-bold mb-6 border-t border-gray-300 pt-2">
-                            R$ {product.price.toFixed(2)}
-                        </h4>
+                        {product.price !== 0 && (
+                            <h4 className="text-3xl font-bold mb-6 border-t border-gray-300 pt-2">
+                                R$ {product.price.toFixed(2)}
+                            </h4>
+                        )}
 
                         <a
                             href={`https://api.whatsapp.com/send?phone=556232150996&text=Olá! Estava olhando seu catálogo e me interessei pelo produto *${encodeURIComponent(product.name)}*.`}

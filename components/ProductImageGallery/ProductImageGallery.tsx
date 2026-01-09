@@ -13,7 +13,7 @@ export default function ProductImageGallery({ photos, productName }: ProductImag
     const [selectedImage, setSelectedImage] = useState(0)
     const [isFullscreen, setIsFullscreen] = useState(false)
 
-    // Handle keyboard navigation
+    // Handle keyboard navigation for accessibility
     useEffect(() => {
         if (!isFullscreen) return
 
@@ -34,13 +34,11 @@ export default function ProductImageGallery({ photos, productName }: ProductImag
 
     return (
         <div>
-            {/* Fullscreen Modal */}
             {isFullscreen && (
                 <div 
                     className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center"
                     onClick={() => setIsFullscreen(false)}
                 >
-                    {/* Close Button */}
                     <button
                         onClick={() => setIsFullscreen(false)}
                         className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors z-10"
@@ -49,7 +47,6 @@ export default function ProductImageGallery({ photos, productName }: ProductImag
                         <IoClose size={36} />
                     </button>
 
-                    {/* Navigation Arrows */}
                     {photos.length > 1 && (
                         <>
                             <button
@@ -75,7 +72,6 @@ export default function ProductImageGallery({ photos, productName }: ProductImag
                         </>
                     )}
 
-                    {/* Fullscreen Image */}
                     <div 
                         className="relative w-full h-full max-w-5xl max-h-[85vh] mx-4"
                         onClick={(e) => e.stopPropagation()}
@@ -89,7 +85,6 @@ export default function ProductImageGallery({ photos, productName }: ProductImag
                         />
                     </div>
 
-                    {/* Image Counter */}
                     {photos.length > 1 && (
                         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white bg-black/50 px-4 py-2 rounded-full text-sm">
                             {selectedImage + 1} / {photos.length}
@@ -98,7 +93,6 @@ export default function ProductImageGallery({ photos, productName }: ProductImag
                 </div>
             )}
 
-            {/* Main Image */}
             <div 
                 className="relative aspect-square rounded-lg overflow-hidden bg-white shadow-sm cursor-zoom-in"
                 onClick={() => setIsFullscreen(true)}
@@ -113,7 +107,6 @@ export default function ProductImageGallery({ photos, productName }: ProductImag
                 />
             </div>
 
-            {/* Thumbnail Gallery */}
             {photos.length > 1 && (
                 <div className="grid grid-cols-3 gap-4 mt-4">
                     {photos.map((photo, index) => (

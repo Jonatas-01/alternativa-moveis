@@ -216,7 +216,7 @@ export default function AdminDestaque() {
                             <h4 className="font-semibold text-base line-clamp-1 mt-1">{produto.name}</h4>
                             <p className="text-sm text-gray-500 line-clamp-1">{produto.brief_description}</p>
                             <h4 className="font-semibold text-base text-[var(--primary)]">
-                                R$ {produto.price.toFixed(2)}
+                                R$ {produto.price !== 0 ? produto.price.toFixed(2) : '-'}
                             </h4>
                         </div>
                     </div>
@@ -319,7 +319,7 @@ export default function AdminDestaque() {
                                                 </span>
                                                 <h4 className="font-semibold text-sm line-clamp-1 mt-1">{produto.name}</h4>
                                                 <p className="text-sm text-[var(--primary)] font-medium">
-                                                    R$ {produto.price.toFixed(2)}
+                                                    R$ {produto.price !== 0 ? produto.price.toFixed(2) : '-'}
                                                 </p>
                                             </div>
                                         </div>

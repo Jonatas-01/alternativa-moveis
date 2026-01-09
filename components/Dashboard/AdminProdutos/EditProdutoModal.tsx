@@ -292,7 +292,7 @@ export default function EditProdutoModal({
 
                                 <div>
                                     <label className="block mb-1 font-medium">Valor (R$)</label>
-                                    <input defaultValue={product.price.toFixed(2)} type="number" step="0.01" name="price" className="w-full border border-gray-300 rounded-md p-2" placeholder="R$ 0,00" required />
+                                    <input defaultValue={product.price !== 0 ? product.price.toFixed(2) : 0} type="number" step="0.01" name="price" className="w-full border border-gray-300 rounded-md p-2" placeholder="R$ 0,00" required />
                                 </div>
 
                                 <div>
